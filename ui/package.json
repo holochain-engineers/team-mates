@@ -1,0 +1,39 @@
+{
+  "name": "@holochain-engineers/invitations",
+  "version": "0.0.0",
+  "author": "thomascal",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --open",
+    "mock": "ng serve --open --configuration mock",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~13.0.0",
+    "@angular/cdk": "^13.0.0",
+    "@angular/common": "~13.0.0",
+    "@angular/compiler": "~13.0.0",
+    "@angular/core": "~13.0.0",
+    "@angular/forms": "~13.0.0",
+    "@angular/material": "^13.0.0",
+    "@angular/platform-browser": "~13.0.0",
+    "@angular/platform-browser-dynamic": "~13.0.0",
+    "@angular/router": "~13.0.0",
+    "@holochain-open-dev/cell-client": "^0.0.9",
+    "@holochain/conductor-api": "~0.2.4",
+    "@ngrx/component-store": "^12.5.1",
+    "rxjs": "~7.4.0",
+    "tslib": "^2.3.1",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~13.0.1",
+    "@angular/cli": "~13.0.1",
+    "@angular/compiler-cli": "~13.0.0",
+    "@types/node": "^16.11.6",
+    "typescript": "~4.4.4"
+  }
+}

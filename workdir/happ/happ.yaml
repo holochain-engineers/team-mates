@@ -1,0 +1,15 @@
+---
+manifest_version: "1"
+name: invitations
+description: ~
+slots:
+  - id: invitations
+    provisioning:
+      strategy: create
+      deferred: false
+    dna:
+      bundled: "../dna/invitations.dna"
+      properties: ~
+      uuid: ~
+      version: ~
+      clone_limit: 0

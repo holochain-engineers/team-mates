@@ -1,0 +1,4 @@
+<list-invitations></list-invitations>
+<ng-container *ngIf="(selectedInvitation$ | async); let editInvite">
+  <create-invitation [invitation]="$any(editInvite)"></create-invitation>
+</ng-container>
