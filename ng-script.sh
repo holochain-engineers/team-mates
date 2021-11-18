@@ -2,10 +2,10 @@
 
 git clone this starter project
 
-## make sure you are using the ACTIVE LTS node (currently node 14.18)
-## make sure you are using the latest npm (7.x) to avoid install errors
+## make sure you are using the ACTIVE LTS node (currently node 16.13)
+## make sure you are using the latest npm (8.x) to avoid install errors
 ## if you are using nvm and want the latest non packaged npm version: 
-## cd ~/.nvm/versions/node/v14.18.0/lib
+## cd ~/.nvm/versions/node/v16.13.0/lib
 ## npm install npm 
 
 

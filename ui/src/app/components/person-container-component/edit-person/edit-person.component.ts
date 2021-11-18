@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Person } from '../../../models/person';
+import { Person } from '../../../models/profile';
 import { PersonStore } from '../../../store/person.store';
 
 @Component({

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 //import { ApiResponse } from '../models/api-response';
-import { Person } from '../models/person';
+import { Person } from '../models/profile';
 
 const API_ROOT = 'https://swapi.dev/api';
 

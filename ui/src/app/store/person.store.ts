@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { Person } from '../models/person';
+import { Person } from '../models/profile';
 import { StarWarsApiService } from '../services/star-wars-api.service';
 
 export interface PersonState {

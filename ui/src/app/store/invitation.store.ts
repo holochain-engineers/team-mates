@@ -94,8 +94,9 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   selectInvitation(hash: string) {
     return this.select((state) => state.invitations.find(i => i.invitation_header_hash === hash));
   }
-
-  readonly invitations$ = this.select(({ invitations }) => invitations);
+  selectInvitations(){
+    return this.select(({ invitations }) => invitations);
+  }
 
 
   //readonly editorId$ = this.select(({ editorId }) => editorId);
