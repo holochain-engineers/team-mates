@@ -1,15 +1,8 @@
-<ng-container *ngIf="(myprofile$ | async); let me">
-  <component-store-edit-display [person]="$any(editPerson)"></component-store-edit-display>
-  <component-store-edit-person [person]="$any(editPerson)"></component-store-edit-person>
-</ng-container>
-<ng-container *ngIf="(!myprofile$ | async); else hasprofile; let myprofile">
-  <registration></registration>
-</ng-container>
-<ng-template #hasprofile>
-  <profile [profile]="$any(myprofile)"></profile>
+<ng-container *ngIf="(myprofile$ | async); else noprofile; let profile">
+  <app-profile [profile]="profile"></app-profile>
   <create-invitation></create-invitation>
-  <invitations-list></invitations-list>
+  <invitation></invitation>
+</ng-container>
+<ng-template #noprofile>
+  <registration></registration>
 </ng-template>
-
-if creatingProfile show registration
-if !creatingProfile and myprofile show main 

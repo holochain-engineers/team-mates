@@ -6,8 +6,7 @@
       <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
         <div style="color:red">{{errorMessage}}</div>
         <div class="text-gray-100 py-2">Profile</div>
-        <div *ngIf="p_store.MyProfile">
-          <div *mobxReaction="setAgent.bind(this)">
+        <ng-container *ngIf="profile">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
@@ -25,13 +24,12 @@
                     <div class="text-sm text-gray-900">avatar</div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-900">{{agentData.nickname}}</div>
+                    <div class="text-sm text-gray-900">{{profile.nickname}}</div>
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>

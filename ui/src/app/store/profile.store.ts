@@ -1,55 +1,108 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, Subject, Subscription } from 'rxjs';
-import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { AgentProfile } from '../models/profile';
+import { pluck, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { AgentProfile, Profile } from '../models/profile';
 import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev/core-types';
 import { ProfileService } from '../services/profile.service';
+import { Dictionary } from '../helpers/utils';
 
 export interface ProfileState {
   agentProfiles: AgentProfile[];
-  myprofile: AgentProfile | undefined
+  //myprofile: AgentProfile | undefined
 }
 
 //todo export InviteeState
 
 @Injectable() //
-export class ProfileStore extends ComponentStore<ProfileState> {
+export class ProfileStore extends ComponentStore<ProfileState> implements OnDestroy {
+  private mypubkey!: string
+  private _subs = new Subscription();
+  public agentDictionary!:Dictionary<string>
 
   constructor(private readonly _profileService: ProfileService) {
-    super({agentProfiles: [], myprofile:undefined});
+    super({agentProfiles: []}); //, myprofile:undefined
+    this.mypubkey = this._profileService.getMyAgentkey()!
   }
 
    /* selectors */
 
-  selectProfile(hash: string){
-    return this.select((state) => state.agentProfiles.find(i => i.agent_pub_key === hash));
+  selectProfile(hash: string):Observable<AgentProfile> {
+    return this.select((state) => state.agentProfiles.find(i => i.agent_pub_key === hash)!);
   }
-  selectProfiles() {
+  selectProfiles():Observable<AgentProfile[]>  {
     return this.select(({ agentProfiles }) => agentProfiles);
   }
 
   /* updaters */
-  readonly setMyProfile = this.updater(
-    (state, myprofile: AgentProfile | undefined) => ({ ...state, myprofile })
-  );
+  //readonly setMyProfile = this.updater(
+  //  (state, myprofile: AgentProfile | undefined) => ({ ...state, myprofile })
+  //);
   readonly addProfile = this.updater((state, agentprofile: AgentProfile) => ({
     agentProfiles: [...state.agentProfiles, agentprofile],
   }));
+
+  readonly updateProfile = this.updater((state, agentprofile: AgentProfile) => ({
+    agentProfiles: [ ...state.agentProfiles.filter((entry)=>{
+        return entry.agent_pub_key !== agentprofile.agent_pub_key //? undefined : entry
+      }), agentprofile]
+  }));
+
+
   readonly loadProfiles = this.updater((state, profiles: AgentProfile[] | null) => ({
     ...state,
     agentProfiles: profiles || [],
   }));
 
   async loadProfileEntries():Promise<void> {
+    
     const profiles = await this._profileService.getAllProfiles()
     this.loadProfiles(profiles)
+    const agentprofile = await this._profileService.getMyProfile()
+    if (agentprofile) {
+      //this.agentpubkey = agentprofile.agent_pub_key
+      console.log("agentkey in load",this.mypubkey)
+      this.addProfile(agentprofile)
+    }
+    const keyNickSubscription$ = this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
+      return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname}
+    })))
+    this._subs.add(keyNickSubscription$.subscribe({next: (agent) => {
+      this.agentDictionary = Object.assign({}, ...agent.map((x) => ({[x.agent_pub_key]: x.nickname})))},
+      error: (error) => {
+        console.error('An error happened while loading agent dictionary:', error);
+      },
+    }));
   }
 
-  async get
+  getMyProfile():Observable<Profile | undefined> {
+    /*if (!this.agentpubkey) {
+      const agentprofile = await this._profileService.getMyProfile()
+      if (agentprofile) {
+        this.agentpubkey = agentprofile.agent_pub_key
+        this.addProfile(agentprofile)
+      }
+    }*/
+    console.log("agentkey",this.mypubkey)
+    return this.selectProfile(this.mypubkey).pipe( 
+      pluck('profile'))
+
+       //   return agentprofile.profile 
+       // else 
+        //  return undefined}))
+  }
+
+  async setMyProfile(myprofile:Profile) {
+      const agentprofile = await this._profileService.createProfile(myprofile)
+      this.updateProfile(agentprofile) // this should do an upsert
+  }
+
+  ngOnDestroy() {
+    this._subs.unsubscribe();
+  }
 
    // effects (future time UI) 
-  // Each new call of getMovie(id) pushed that id into movieId$ stream.
+  /* Each new call of getMovie(id) pushed that id into movieId$ stream.
   readonly getMyProfile = this.effect(() => {
     
       // 👇 Handle race condition with the proper choice of the flattening operator.
@@ -62,7 +115,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
         // 👇 Handle potential error within inner pipe.
         catchError(() => EMPTY),
       )),
-  });
+  });*/
 
 }
 /*import {Injectable} from "@angular/core"

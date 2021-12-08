@@ -7,6 +7,12 @@ import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev
     invitees: AgentPubKeyB64[];
     timestamp: any;
   }
+
+  export interface ProfiledInvitation {
+    inviter: string;
+    invitees: string[];
+    timestamp: any;
+  }
   
   export interface InvitationEntryInfo {
     invitation: Invitation;
@@ -14,6 +20,14 @@ import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev
     invitation_header_hash: HeaderHashB64;
     invitees_who_accepted: AgentPubKeyB64[];
     invitees_who_rejected: AgentPubKeyB64[];
+  }
+
+  export interface ProfiledInvitationEntry {
+    invitation: ProfiledInvitation;
+    invitation_entry_hash: EntryHashB64;
+    invitation_header_hash: HeaderHashB64;
+    invitees_who_accepted: string[];
+    invitees_who_rejected: string[];
   }
   
   export enum InvitationStatus {
@@ -24,7 +38,7 @@ import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev
 
   export const mockInvitation:Invitation = {
     inviter:"12C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs",
-    invitees:["13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs","13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs"],
+    invitees:["13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-ds","13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-es"],
     timestamp:"1234425567"
   }
 

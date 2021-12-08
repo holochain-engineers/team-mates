@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <invitation></invitation>
+    <profile-invitation-container></profile-invitation-container>
   `,
   styleUrls: ['./app.component.scss']
 })

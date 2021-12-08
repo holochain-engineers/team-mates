@@ -6,8 +6,8 @@ import { InvitationStore } from '../../store/invitation.store';
 
 @Component({
   selector: 'invitation',
-  templateUrl: './invitation.component.html',
-  providers: [InvitationStore,ProfileStore],
+  templateUrl: './invitation.component.html'
+  //providers: [InvitationStore,ProfileStore],
 })
 export class InvitationComponent implements OnInit {
   selectedInvitation$ = this._invitationStore.selectInvitation("123");
@@ -19,7 +19,7 @@ export class InvitationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._profileStore.loadProfileEntries()
+    //this._profileStore.loadProfileEntries()
     this._invitationStore.loadInvitationEntries()
     //this._invitationApi.getPeople().subscribe({
     //  next: (people) => {

@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { HolochainService } from './services/holochain.service';
 import { ClickOutsideDirective } from './helpers/clickout';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from "./helpers/material.module";
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,7 +12,9 @@ import { InvitationComponent } from './components/invitation/invitation.componen
 import { InvitationListComponent } from './components/invitation/list-invitations/list-invitations.component';
 //import { EditInvitationComponent } from './components/invitation/edit-invitation/edit-invitation.component';
 import { CreateInvitationComponent } from './components/invitation/create-invitation/create-invitation.component';
-
+import { ProfileInvitationComponent } from './components/profile-invitation.component';
+import { ProfileComponent } from './components/profile/profile.component'
+import { RegistrationComponent } from './components/registration/registration.component'
 
 //import { EditDisplayComponent } from './components/person-container-component/edit-display/edit-display.component';
 //import { EditPersonComponent } from './components/person-container-component/edit-person/edit-person.component';
@@ -35,7 +37,10 @@ export function initializeConnection(holochainService: HolochainService) {
     InvitationComponent,
     InvitationListComponent,
     //EditInvitationComponent,
-    CreateInvitationComponent
+    CreateInvitationComponent,
+    ProfileInvitationComponent,
+    ProfileComponent,
+    RegistrationComponent
     //PersonContainerComponent,
     //PersonListComponent,
     //EditDisplayComponent,
@@ -47,6 +52,7 @@ export function initializeConnection(holochainService: HolochainService) {
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     //HttpClientModule,
     AppMaterialModule
   ],

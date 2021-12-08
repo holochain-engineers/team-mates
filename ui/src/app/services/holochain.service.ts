@@ -27,6 +27,16 @@ export class HolochainService implements OnDestroy{
   //protected cellData: InstalledCell
  ){}
 
+  get_pub_key_from_cell(cell:string):string | undefined {
+    for(let installedcell of this.cellData){
+      //console.log(serializeHash(installedcell.cell_id[0]))
+      console.log(installedcell.cell_nick)
+      if (installedcell.cell_nick == cell)
+        return serializeHash(installedcell.cell_id[1])
+    };
+    return undefined
+  }
+
   protected getCellId(cellnick:string):CellId | undefined {
     for(let installedcell of this.cellData){
       //console.log(serializeHash(installedcell.cell_id[0]))
@@ -52,7 +62,6 @@ export class HolochainService implements OnDestroy{
                 //this.hcConnection = connection
                 const appInfo = await this.appWS.appInfo({ installed_app_id: environment.APP_ID});
                 this.cellData = appInfo.cell_data;
-            
                 //this.cellClient = new HolochainClient(connection, cellData);
                 ///this.cellId = appInfo.cell_data[0].cell_id;
                 //this.pstore.myAgentPubKey = serializeHash(this.cellId[1])
@@ -83,6 +92,9 @@ export class HolochainService implements OnDestroy{
         timeout
         );
       }
+
+
+  
       //try{
       //  return this.cellClient.callZome(
        //   zome,
