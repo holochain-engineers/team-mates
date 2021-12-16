@@ -1,8 +1,8 @@
 ---
 manifest_version: "1"
-name: invitations
+name: starter-ui
 description: ~
-slots:
+roles:
   - id: invitations
     provisioning:
       strategy: create

@@ -19,7 +19,7 @@ export enum ConnectionState{
 export class HolochainService implements OnDestroy{
   protected appWS!: AppWebsocket 
   protected cellData!: InstalledCell[] 
-  protected zomeCallbacks: Dictionary<AppSignalCb> = {};
+  protected zomeCallbacks: Dictionary<AppSignalCb> = {}
   // public cellClient!: HolochainClient
 
  constructor(
@@ -30,18 +30,18 @@ export class HolochainService implements OnDestroy{
   get_pub_key_from_cell(cell:string):string | undefined {
     for(let installedcell of this.cellData){
       //console.log(serializeHash(installedcell.cell_id[0]))
-      console.log(installedcell.cell_nick)
-      if (installedcell.cell_nick == cell)
+     // console.log(installedcell.role_id)
+      if (installedcell.role_id == cell)
         return serializeHash(installedcell.cell_id[1])
     };
     return undefined
   }
 
-  protected getCellId(cellnick:string):CellId | undefined {
+  protected getCellId(cell:string):CellId | undefined {
     for(let installedcell of this.cellData){
       //console.log(serializeHash(installedcell.cell_id[0]))
-      console.log(installedcell.cell_nick)
-      if (installedcell.cell_nick == cellnick)
+      //console.log(installedcell.role_id)
+      if (installedcell.role_id == cell)
         return installedcell.cell_id
     };
     return undefined
@@ -93,21 +93,9 @@ export class HolochainService implements OnDestroy{
         );
       }
 
-
-  
-      //try{
-      //  return this.cellClient.callZome(
-       //   zome,
-       //   fn_Name,
-        //  payload,
-       // )
-      //}catch(ex){
-      //  console.log(ex)
-      //}
-    //}
-
     // in the future zome_name should be a property of AppSignal
     signalHandler(signal: AppSignal): void {
+      console.log("zomecallbacks:",this.zomeCallbacks)
       console.log("what is this?: ",signal.type)
       for (const [zome, appCB] of Object.entries(this.zomeCallbacks)) {
         if (signal.data.payload.zome_name == zome) {

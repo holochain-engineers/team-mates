@@ -5,6 +5,7 @@ import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { InvitationService } from '../services/invitation.service';
 import { Invitation, InvitationEntryInfo } from '../models/invitation';
 import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev/core-types';
+import { ThrowStmt } from '@angular/compiler';
 
 /*export interface PersonState {
   people: Person[];
@@ -214,6 +215,14 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   //this currently is responded to by an acceptInvitation signal.. so no need to listen or wait for a response
   sendNewInvitation(agentPubKeyB64_arr: string[]){
     this._invitationService.sendInvitation(agentPubKeyB64_arr)
+  }
+
+  acceptInvitation(header_hash:string){
+    this._invitationService.acceptInvitation(header_hash)
+  }
+
+  rejectInvitation(header_hash:string){
+    this._invitationService.rejectInvitation(header_hash)
   }
 
   async loadInvitationEntries():Promise<void> {

@@ -5,6 +5,7 @@
 /ui/node_modules/
 /ui/dist/
 /ui/.angular
+/ui/src/app/components/person-container-component
 
 
 # holochain

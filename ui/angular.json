@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "invitations": {
+    "starter-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -41,7 +41,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/invitations",
+            "outputPath": "dist/starter-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -107,13 +107,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "invitations:build:production"
+              "browserTarget": "starter-ui:build:production"
             },
             "development": {
-              "browserTarget": "invitations:build:development"
+              "browserTarget": "starter-ui:build:development"
             },
             "mock": {
-              "browserTarget": "invitations:build:mock"
+              "browserTarget": "starter-ui:build:mock"
             }
           },
           "defaultConfiguration": "development"
@@ -121,11 +121,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "invitations:build"
+            "browserTarget": "starter-ui:build"
           }
         }
       }
     }
   },
-  "defaultProject": "invitations"
+  "defaultProject": "starter-ui"
 }

@@ -3,7 +3,7 @@ import { ComponentStore } from '@ngrx/component-store';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Person } from '../models/profile';
-import { StarWarsApiService } from '../services/star-wars-api.service';
+import { StarWarsApiService } from '../components/person-container-component/star-wars-api.service';
 
 export interface PersonState {
   people: Person[];

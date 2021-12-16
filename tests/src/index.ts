@@ -7,7 +7,7 @@ import {
 
 import { Installables } from "./types";
 import path from "path";
-import invitations from "./zomes/chess";
+import invitations from "./zomes/starter-ui";
 
 // QUIC
 const network = {

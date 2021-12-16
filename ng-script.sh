@@ -11,7 +11,7 @@ git clone this starter project
 
 ## choose global cli or npx
 ## NPX 
-npx -p @angular/cli@latest ng new invitations --skip-tests --minimal --routing --style=scss
+npx -p @angular/cli@latest ng new starter-ui --skip-tests --minimal --routing --style=scss
 ## or 
 
 ## install anglular cli
@@ -36,7 +36,7 @@ npx -p @angular/cli@latest ng add @ngrx/component-store@latest
 
 ## install the holochain cell client
 npm install --save-exact @holochain/conductor-api
-npm install @holochain-open-dev/cell-client
+## doesnt work -> npm install @holochain-open-dev/cell-client
 
 
 ## Optional styling with tailwind
@@ -45,6 +45,7 @@ npm install @holochain-open-dev/cell-client
 npm install -D tailwindcss
 
 ## add tailwind config file
+npx tailwindcss init
 touch tailwind.config.js
 
 ## paste following code

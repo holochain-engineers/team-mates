@@ -17,7 +17,9 @@ export class InvitationService {
     this.holochainService.registerCallback(this.zomeName, this.signalHandler)
   }
 
-  sendInvitation(input: AgentPubKeyB64[] | undefined): Promise<any> {
+  sendInvitation(input: AgentPubKeyB64[] | undefined): Promise<any>{
+    if (environment.mock)
+      return new Promise<any>((resolve)=>resolve)
     return this.callZome('send_invitation', input);
   }
 

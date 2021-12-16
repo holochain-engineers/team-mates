@@ -11,9 +11,14 @@ export interface AgentProfile {
   profile: Profile | undefined;
 }
 
-export interface KeyvalueProfile {
-  agent_pub_key: AgentPubKeyB64;
-  nickname?: string
+export interface KeyNick {
+  agent_pub_key:string;
+  nickname: string
+}
+
+export interface KeyValue {
+  key:string;
+  value: string
 }
 
 export const mockMyProfile:Profile = {nickname: "thomas",fields:{["avatar"]:"pop"}}

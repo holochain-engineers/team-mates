@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { resolve } from 'path/posix';
 import { InvitationStore } from '../store/invitation.store';
 import { ProfileStore } from '../store/profile.store';
 

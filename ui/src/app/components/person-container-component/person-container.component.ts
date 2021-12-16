@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StarWarsApiService } from '../../services/star-wars-api.service';
+import { StarWarsApiService } from './star-wars-api.service';
 import { PersonStore } from '../../store/person.store';
 
 @Component({

@@ -1,13 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { InvitationEntryInfo,ProfiledInvitationEntry } from 'src/app/models/invitation';
+import { InvitationEntryInfo } from 'src/app/models/invitation';
 import { InvitationStore } from '../../../store/invitation.store';
 import { ProfileStore } from 'src/app/store/profile.store';
-import { map, mapTo, pluck } from 'rxjs/operators';
-import { ConstantPool } from '@angular/compiler';
+import { map } from 'rxjs/operators';
 import { Dictionary } from 'src/app/helpers/utils';
 import { Observable, Subscription } from 'rxjs';
-import { AgentProfile, Profile, KeyvalueProfile } from 'src/app/models/profile';
 
 @Component({
   selector: 'list-invitations',
@@ -16,49 +13,41 @@ import { AgentProfile, Profile, KeyvalueProfile } from 'src/app/models/profile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InvitationListComponent implements OnDestroy{
-  //protected invitations$ = this._invitationStore.invitations$;
-  public displayedColumns = ['inviter', 'invitees', 'timestamp', 'invitees_who_accepted', 'invitees_who_rejected' ];
-  //the source where we will get the data
-
-  //private agentDictionary!:Dictionary<string>
-  //private profileSubscription$!:Subscription
-  public dataSource$ = this._invitationStore.selectInvitations()/*.pipe(map((invites: InvitationEntryInfo[]) => {
-    invites.map(invite => { 
-      const bb:ProfiledInvitationEntry = {Invitation:{Inviter:this._profileStore.selectProfile(invite.invitation_entry_hash)}} as ProfiledInvitationEntry
-      this._profileStore.selectProfile(invite.invitation_entry_hash)
-    })
-  })); //new MatTableDataSource<InvitationEntryInfo>();*/
-  //public agentDictionary$:Observable<Dictionary<string>> = this._profileStore.selectProfiles().pipe(map(agentprofiles=> agentprofiles?.map(ap=> {return {[ap.agent_pub_key]:ap.profile?.nickname}})))
-  //editedPerson$ = this._invitationStore.editedInvitation$;
-  //editorId$ = this._invitationStore.editorId$;
+  public displayedColumns = ['inviter', 'invitees', 'timestamp', 'invitees_who_accepted', 'invitees_who_rejected', 'action' ];
+  public dataSource$:Observable<InvitationEntryInfo[]> = this._invitationStore.selectInvitations()
+  private profileDictionarySubscription$!: Subscription
+  private profileDictionary:Dictionary<string> = {}
+  
   constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {}
 
 
   ngOnInit(){
-     // this.profileSubscription$ = this._profileStore.selectProfiles().pipe(map(agentprofiles => agentprofiles.map(ap => {
-     //   return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname}
-     // }))).subscribe(res => {this.agentDictionary = Object.assign({}, ...res.map((x) => ({[x.agent_pub_key]: x.nickname})))});
-    //this.dataSource.data = this.invitations$
+    this.profileDictionarySubscription$ = this._profileStore.selectProfiles().pipe(map(agentprofiles=> agentprofiles?.map(ap=> {return {[ap.agent_pub_key]:ap.profile!.nickname}}))).subscribe(res=>
+      this.profileDictionary = Object.assign({},...res)
+     ) // .subscribe(res => {this.agentDictionary = Object.assign({}, ...res.map((x) => ({[x.agent_pub_key]: x.nickname})))});
   }
 
- ngOnDestroy(){
- //  this.profileSubscription$.unsubscribe()
- }
+  ngOnDestroy(){
+    this.profileDictionarySubscription$.unsubscribe()
+  }
+
+  accept(header_hash:string){
+    this._invitationStore.acceptInvitation(header_hash)
+  }
+
+  reject(header_hash:string){
+    this._invitationStore.rejectInvitation(header_hash)
+  }
 
   hashToAgent(hash:string):string{
-    console.log("hashy",this._profileStore.agentDictionary)
-    return this._profileStore.agentDictionary[hash]
-    //console.log("hello",res)
-    //if (res)
-     // return res.profile?.nickname
-    //else
-    //  return "none found" //this._profileStore.selectProfile(hash)
+    console.log("profile_list:",this.profileDictionary)
+    return this.profileDictionary[hash]
   }
 
   hashListToAgentList(hashlist:string[]):string[] {
     const res:string[] = []
     for(const hash of hashlist){
-      res.push(this._profileStore.agentDictionary[hash])
+      res.push(this.profileDictionary[hash])
     }
     return res
   }

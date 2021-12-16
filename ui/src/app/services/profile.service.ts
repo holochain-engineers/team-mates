@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '@environment';
 import { AgentProfile, Profile, mockMyAgentProfile, mock1AgentProfile, mockAgentProfiles } from '../models/profile';
 import { AgentPubKeyB64 } from '@holochain-open-dev/core-types';
-import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -29,7 +28,7 @@ export class ProfileService {
       return new Promise<AgentProfile | undefined>((resolve) => {
         setTimeout(()=> {
           const response: AgentProfile = {agent_pub_key:mockMyAgentProfile.agent_pub_key,profile:mockMyAgentProfile.profile}
-          resolve(undefined)},2000)
+          resolve(response)},2000)
       })
     return this.callZome('get_my_profile', null);
   }

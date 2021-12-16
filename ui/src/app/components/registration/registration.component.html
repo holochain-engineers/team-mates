@@ -1,6 +1,6 @@
   <div class="bg-world-splash bg-cover bg-center fixed inset-0 z-20">
     <div class="min-h-screen flex items-center justify-center">
-      <div class="border-2 border-opacity-50 border-gray-200 rounded-lg z-30 p-11 max-w-xs shadow-2xl">
+      <div class="border-2 border-opacity-50 bg-opacity-60 bg-white border-gray-200 rounded-lg z-30 p-11 max-w-xs shadow-2xl">
             <form class="font-sans text-sm space-y-2 text-center" [formGroup]="profileForm" (ngSubmit)="signUp()">
                 <label style="color:red">{{errorMessage}}</label>
                 <input class="w-full h-10 px-2" type="text" placeholder="username" formControlName="handle" />

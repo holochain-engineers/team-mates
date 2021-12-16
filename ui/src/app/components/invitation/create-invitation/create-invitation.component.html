@@ -1,6 +1,25 @@
-<button mat-icon-button color="primary" (click)="send('hash_array')">
-  <mat-icon>save</mat-icon>
-</button>
-<button mat-icon-button color="warn" (click)="cancel()">
-  <mat-icon>cancel</mat-icon>
-</button>
+<!--Using items input-->
+
+<section class="text-gray-600 body-font">
+    <div class="relative flex flex-col bg-white shadow-lg sm:rounded-3xl sm:p-10 bg-clip-padding bg-opacity-60 border border-gray-200" style="backdrop-filter: blur(20px);">
+      <div class="text-lg">Create invitation</div><hr><br>
+      <ng-select
+          [items]="people$ | async"
+          [multiple]="true"
+          [closeOnSelect]="false"
+          [searchable]="false"
+          bindLabel="nickname"
+          placeholder="Select people"
+          [(ngModel)]="selectedPeople">
+      </ng-select>
+      <div class="flex flex-row mt-3">
+        <button  mat-icon-button color="primary" (click)="send()">
+          <mat-icon class="pr-4">save</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="cancel()">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </div>
+    </div>
+</section>
+
