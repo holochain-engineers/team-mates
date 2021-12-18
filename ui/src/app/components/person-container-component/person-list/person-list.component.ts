@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PersonStore } from '../../../store/person.store';
+import { PersonStore } from '../person.store';
 
 @Component({
   selector: 'component-store-person-list',

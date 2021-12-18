@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Person } from '../../../models/profile';
-import { PersonStore } from '../../../store/person.store';
+import { PersonStore } from '../person.store';
 
 @Component({
   selector: 'component-store-edit-person',

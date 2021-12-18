@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StarWarsApiService } from './star-wars-api.service';
-import { PersonStore } from '../../store/person.store';
+import { PersonStore } from './person.store';
 
 @Component({
   selector: 'component-store-person-container',
