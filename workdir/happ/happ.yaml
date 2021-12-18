@@ -3,12 +3,12 @@ manifest_version: "1"
 name: starter-ui
 description: ~
 roles:
-  - id: invitations
+  - id: profile_invitation
     provisioning:
       strategy: create
       deferred: false
     dna:
-      bundled: "../dna/invitations.dna"
+      bundled: "../dna/starter-ui.dna"
       properties: ~
       uuid: ~
       version: ~

@@ -14,17 +14,20 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class InvitationListComponent implements OnDestroy{
   public displayedColumns = ['inviter', 'invitees', 'timestamp', 'invitees_who_accepted', 'invitees_who_rejected', 'action' ];
-  public dataSource$:Observable<InvitationEntryInfo[]> = this._invitationStore.selectInvitations()
+  public outgoingInvitations$:Observable<InvitationEntryInfo[]>
+  public incommingInvitations$:Observable<InvitationEntryInfo[]>
   private profileDictionarySubscription$!: Subscription
   private profileDictionary:Dictionary<string> = {}
   
-  constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {}
+  constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {
+    this.outgoingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
+    this.incommingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter !== this._profileStore.mypubkey)));
+  }
 
 
   ngOnInit(){
-    this.profileDictionarySubscription$ = this._profileStore.selectProfiles().pipe(map(agentprofiles=> agentprofiles?.map(ap=> {return {[ap.agent_pub_key]:ap.profile!.nickname}}))).subscribe(res=>
-      this.profileDictionary = Object.assign({},...res)
-     ) // .subscribe(res => {this.agentDictionary = Object.assign({}, ...res.map((x) => ({[x.agent_pub_key]: x.nickname})))});
+    this.profileDictionarySubscription$ = this._profileStore.selectKeyNickIndexes().subscribe(res=>this.profileDictionary = Object.assign({},...res))
+         // .subscribe(res => {this.agentDictionary = Object.assign({}, ...res.map((x) => ({[x.agent_pub_key]: x.nickname})))});
   }
 
   ngOnDestroy(){

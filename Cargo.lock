@@ -140,13 +140,13 @@ checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
 name = "hc_zome_invitations"
 version = "0.0.1"
 dependencies = [
- "hc_zome_invitations 0.0.1 (git+https://github.com/eyss/invitations?rev=edc1bc3c318318d5a55d3b1e40f9641514424bc5)",
+ "hc_zome_invitations 0.0.1 (git+https://github.com/holochain-engineers/invitations?rev=176c63b4f44890e52d72ae4db348026c7fd6de13)",
 ]
 
 [[package]]
 name = "hc_zome_invitations"
 version = "0.0.1"
-source = "git+https://github.com/eyss/invitations?rev=edc1bc3c318318d5a55d3b1e40f9641514424bc5#edc1bc3c318318d5a55d3b1e40f9641514424bc5"
+source = "git+https://github.com/holochain-engineers/invitations?rev=176c63b4f44890e52d72ae4db348026c7fd6de13#176c63b4f44890e52d72ae4db348026c7fd6de13"
 dependencies = [
  "chrono",
  "derive_more",

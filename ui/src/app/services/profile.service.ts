@@ -9,7 +9,7 @@ import { AgentPubKeyB64 } from '@holochain-open-dev/core-types';
 })
 export class ProfileService {
   public zomeName = 'profiles'
-  private cellName = 'invitations'
+  private cellName = 'profile_invitation'
   public agent_pub_key?: string //= "DEFAULT_KEY"
 
   constructor(private hcs:HolochainService) { }

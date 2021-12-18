@@ -7,14 +7,15 @@ import { environment } from '@environment';
 
 @Injectable({ providedIn: 'root' })
 export class InvitationService {
-  invitationsReceived$ = new Subject<InvitationEntryInfo>(); //new
+  invitationsReceived$:Subject<InvitationEntryInfo>  //new
   invitationsAccepted$ = new Subject<InvitationEntryInfo>(); //modified
   invitationsRejected$ = new Subject<InvitationEntryInfo>(); //modified
   private zomeName = 'invitations'
-  private cellName = 'invitations'
+  private cellName = 'profile_invitation'
 
   constructor(private holochainService: HolochainService, ) {
-    this.holochainService.registerCallback(this.zomeName, this.signalHandler)
+    this.invitationsReceived$= new Subject<InvitationEntryInfo>();
+    this.holochainService.registerCallback(this.cellName, this.zomeName, (s)=>this.signalHandler(s))
   }
 
   sendInvitation(input: AgentPubKeyB64[] | undefined): Promise<any>{
@@ -52,10 +53,14 @@ export class InvitationService {
     return this.holochainService.call(this.cellName, this.zomeName, fn_name, payload);
   }
 
+
   async signalHandler(payload: any) {
+    console.log("handler called",payload)
+    //console.log(this.invitationsReceived$)
+    //const payload = data.data.payload
     switch (payload.name) {
       case 'invitation received':
-        this.invitationsReceived$.next(payload.data);
+        this.invitationsReceived$.next(payload.data.InvitationReceived);
         break;
 
       case 'invitation accepted':

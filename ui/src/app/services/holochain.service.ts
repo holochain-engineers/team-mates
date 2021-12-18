@@ -4,7 +4,7 @@ import { environment } from '@environment';
 import { AppSignalCb, AppSignal, AppWebsocket, CellId, InstalledCell } from '@holochain/conductor-api'
 import { Dictionary, serializeHash } from "../helpers/utils";
 
-export declare type payloadCb = (payload: any) => void;
+//export declare type payloadCb = (payload: any) => void;
 
 export enum ConnectionState{
   OPEN,
@@ -12,6 +12,10 @@ export enum ConnectionState{
   CLOSING,
   CONNECTING
 }
+
+export type SignalCallback = {cell_name:string, zome_name:string, cb_fn:AppSignalCb }
+
+
 //tsconfig: "allowSyntheticDefaultImports": true,
 @Injectable({
   providedIn: "root"
@@ -19,7 +23,7 @@ export enum ConnectionState{
 export class HolochainService implements OnDestroy{
   protected appWS!: AppWebsocket 
   protected cellData!: InstalledCell[] 
-  protected zomeCallbacks: Dictionary<AppSignalCb> = {}
+  protected signalCallbacks: SignalCallback[] = []
   // public cellClient!: HolochainClient
 
  constructor(
@@ -52,7 +56,7 @@ export class HolochainService implements OnDestroy{
           try{
             console.log("Connecting to holochain")
             //const appWs = await this.appWebsocket.connect("ws://localhost:8888");
-               this.appWS =  await AppWebsocket.connect(environment.HOST_URL,1500, this.signalHandler)
+               this.appWS =  await AppWebsocket.connect(environment.HOST_URL,1500, (s)=>this.signalHandler(s))
                 //signal => {
                  // const payload = signal.data.payload;
                   //if (payload.OfferReceived) {
@@ -93,20 +97,24 @@ export class HolochainService implements OnDestroy{
         );
       }
 
-    // in the future zome_name should be a property of AppSignal
+    /* in the future zome_name should be a property of AppSignal*/
     signalHandler(signal: AppSignal): void {
-      console.log("zomecallbacks:",this.zomeCallbacks)
-      console.log("what is this?: ",signal.type)
-      for (const [zome, appCB] of Object.entries(this.zomeCallbacks)) {
-        if (signal.data.payload.zome_name == zome) {
-          appCB(signal.data.payload)
-          break;
+     // console.log("what is this?: ",signal)
+      if(this.signalCallbacks.length > 0){
+        for (const cb of this.signalCallbacks) {
+          console.log("cb data: ",cb)
+          if (cb.cell_name == signal.data.payload.cell && cb.zome_name == signal.data.payload.zome){
+            console.log("signal callback found, executing cb function: ")
+            cb.cb_fn(signal.data.payload)
+            return
+          }
         }
+        console.log("Signal handler for signal was not found",signal)
       }
     }
 
-    registerCallback(zome_name: string, handler:payloadCb){
-      this.zomeCallbacks[zome_name]= handler
+    registerCallback(cell_name:string, zome_name: string, handler:AppSignalCb){
+      this.signalCallbacks.push({cell_name:cell_name,zome_name:zome_name,cb_fn:handler})
     }
 
 

@@ -15,9 +15,12 @@ export class CreateInvitationComponent {
   public people$!: Observable<KeyNick[]>
   public selectedPeople: KeyNick[] = [] //= [{}]//[{ agent_pub_key: "1234", nickname: 'Karyn Wright' }];
 
-  constructor(
-    private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore,
-  ) {}
+  constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {
+    this.people$ = this._profileStore.selectKeyNickArray()
+  }
+
+  ngOnInit() {
+  }
 
   send() {
     console.log("creating invite ",this.selectedPeople)
@@ -31,11 +34,6 @@ export class CreateInvitationComponent {
     this.selectedPeople = []
   }
 
-
-
-  ngOnInit() {
-      this.people$ = this._profileStore.selectKeyNickArray()
-  }
 
   clearModel() {
       console.log("hereo ",this.selectedPeople)

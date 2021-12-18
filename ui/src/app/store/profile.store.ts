@@ -1,24 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable, Subject, Subscription } from 'rxjs';
 import { pluck, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { AgentProfile, KeyNick, Profile } from '../models/profile';
-import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev/core-types';
 import { ProfileService } from '../services/profile.service';
-import { Dictionary } from '../helpers/utils';
 
 export interface ProfileState {
   agentProfiles: AgentProfile[];
-  //myprofile: AgentProfile | undefined
 }
 
 //todo export InviteeState
 
 @Injectable() //
 export class ProfileStore extends ComponentStore<ProfileState> implements OnDestroy {
-  private mypubkey!: string
-  private _subs = new Subscription();
-  //public agentDictionary!:Dictionary<string>
+  mypubkey!: string
+  //private _subs = new Subscription();
 
   constructor(private readonly _profileService: ProfileService) {
     super({agentProfiles: []}); //, myprofile:undefined
@@ -27,27 +22,26 @@ export class ProfileStore extends ComponentStore<ProfileState> implements OnDest
 
    /* selectors */
 
-  selectProfile(hash: string):Observable<AgentProfile> {
+  selectProfile(hash: string){
     return this.select((state) => state.agentProfiles.find(i => i.agent_pub_key === hash)!);
   }
-  selectProfiles():Observable<AgentProfile[]>  {
+  selectProfiles(){
     return this.select(({ agentProfiles }) => agentProfiles);
   }
 
-  selectKeyNickArray():Observable<KeyNick[]>  {
+  selectKeyNickArray()  {
    return this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
       return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname} as KeyNick
     })))
   }
 
-  /*selectKeyNickDictionary():Observable<{[x:string]:string}[]>  {
-    return this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map((ap) =>
-        ({[ap.agent_pub_key]: ap.profile.nickname})
-      ))))
-    */
- // }
+  selectKeyNickIndexes() {
+    return this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
+      return {[ap.agent_pub_key]:ap.profile!.nickname}})))
+  }
 
   /* updaters */
+  
   //readonly setMyProfile = this.updater(
   //  (state, myprofile: AgentProfile | undefined) => ({ ...state, myprofile })
   //);
@@ -78,18 +72,9 @@ export class ProfileStore extends ComponentStore<ProfileState> implements OnDest
       console.log("agentkey in load",this.mypubkey)
       this.updateProfile(agentprofile)
     }
-    //const keyNickSubscription$ = this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
-    //  return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname}
-    //})))
-    /*this._subs.add(this.selectKeyNickArray().subscribe({next: (agent) => {
-      this.agentDictionary = Object.assign({}, ...agent.map((x) => ({[x.agent_pub_key]: x.nickname})))},
-      error: (error) => {
-        console.error('An error happened while loading agent dictionary:', error);
-      },
-    }));*/
   }
 
-  getMyProfile():Observable<Profile | undefined> {
+  getMyProfile(){
     console.log("agentkey",this.mypubkey)
     return this.selectProfile(this.mypubkey).pipe( 
       pluck('profile'))
@@ -101,7 +86,7 @@ export class ProfileStore extends ComponentStore<ProfileState> implements OnDest
   }
 
   ngOnDestroy() {
-    this._subs.unsubscribe();
+    //this._subs.unsubscribe();
   }
 
    // effects (future time UI) 

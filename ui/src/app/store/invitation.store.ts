@@ -53,41 +53,42 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
           console.error('An error happened while remote saving:', error);
         },
       })
-    );
+    );*/
     this._subs.add(
       this._invitationService.invitationsReceived$.subscribe({
         next: (invitationEntryInfo) => {
-          this.insertInvitation(invitationEntryInfo!);
+          console.log('Invitation received:',invitationEntryInfo);
+          this.upsertInvitations(invitationEntryInfo!);
         },
         error: (error) => {
-          console.error('An error happened while inserting:', error);
+          console.error('An error happened while updating Invitation:', error);
         },
       }) 
     )
     this._subs.add(
       this._invitationService.invitationsAccepted$.subscribe({
         next: (invitationEntryInfo) => {
-          this.setEditedInvitation(invitationEntryInfo!)
+         // this.setEditedInvitation(invitationEntryInfo!)
           this.updateInvitation(invitationEntryInfo!);
-          this.clearEditedInvitation();
+         // this.clearEditedInvitation();
         },
         error: (error) => {
-          console.error('An error happened while updating:', error);
+          console.error('An error happened while updating Invitation:', error);
         },
       }) 
     )
     this._subs.add(
       this._invitationService.invitationsRejected$.subscribe({
         next: (invitationEntryInfo) => {
-          this.setEditedInvitation(invitationEntryInfo!)
+          ///this.setEditedInvitation(invitationEntryInfo!)
           this.updateInvitation(invitationEntryInfo!);
-          this.clearEditedInvitation();
+          //this.clearEditedInvitation();
         },
         error: (error) => {
-          console.error('An error happened while updating:', error);
+          console.error('An error happened while updating Invitation:', error);
         },
       }) 
-    )*/
+    )
   }
 
   /* selectors */
@@ -99,7 +100,6 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     return this.select(({ invitations }) => invitations);
   }
 
-
   //readonly editorId$ = this.select(({ editorId }) => editorId);
   //readonly editedInvitation$ = this.select(({ editedInvitation }) => editedInvitation).pipe(
   //  tap((invitationEntryInfo) => console.log('editedInvitation$', invitationEntryInfo))
@@ -110,12 +110,63 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   readonly addInvitation = this.updater((state, invitation: InvitationEntryInfo) => ({
     invitations: [...state.invitations, invitation],
   }));
+
+  readonly updateInvitation = this.updater((state, invitation: InvitationEntryInfo) => ({
+    invitations: [ ...state.invitations.filter((entry)=>{
+        return entry.invitation_entry_hash !== invitation.invitation_entry_hash //? undefined : entry
+      }), invitation]
+  }));
+
   readonly loadInvitations = this.updater((state, invitations: InvitationEntryInfo[] | null) => ({
     ...state,
     invitations: invitations || [],
   }));
 
 
+    // effects (future time network)
+    readonly upsertInvitations = this.effect((invite$: Observable<InvitationEntryInfo>) =>
+    invite$.pipe(
+      withLatestFrom(this.selectInvitations()),
+      tap<[InvitationEntryInfo, InvitationEntryInfo[]]>(([invite, invitations]) => {
+        const id = invite.invitation_entry_hash;
+        const index = invitations.findIndex((cur) => {
+          console.log('compare', cur, id, cur.invitation_entry_hash === id);
+          return cur.invitation_entry_hash === id;
+        });
+
+        console.log('index', index, invite, invitations);
+
+        if (index > -1) {
+          const modifiedInvitations = [...invitations];
+          modifiedInvitations[index] = invite;
+
+          this.loadInvitations(modifiedInvitations);
+        } else {
+          console.log("adding invite:",invite)
+          this.updateInvitation(invite)
+        }
+      })
+    )
+  );
+
+  /*
+    // effects (future time UI) 
+  // Each new call of getMovie(id) pushed that id into movieId$ stream.
+  readonly upsertInvitation = this.effect((invite$: Observable<InvitationEntryInfo>) => {
+    return invite$.pipe(
+      // 👇 Handle race condition with the proper choice of the flattening operator.
+      switchMap((id) => id.pipe(
+        //👇 Act on the result within inner pipe.
+        tap({
+          next: (movie) => this.addMovie(movie),
+          error: (e) => this.logError(e),
+        }),
+        // 👇 Handle potential error within inner pipe.
+        catchError(() => EMPTY),
+      )),
+    );
+  });
+*/
 /*
   readonly setEditorId = this.updater(
     (state, editorId: number | undefined) => ({ ...state, editorId })
@@ -160,28 +211,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
       )
   );
 
-  // effects (future time network)
-  readonly updateInvitation = this.effect((invite$: Observable<InvitationEntryInfo>) =>
-    invite$.pipe(
-      withLatestFrom(this.invitations$),
-      tap<[InvitationEntryInfo, InvitationEntryInfo[]]>(([invite, invitations]) => {
-        const id = invite.invitation_header_hash;
-        const index = invitations.findIndex((cur) => {
-          console.log('compare', cur, id, cur.invitation_header_hash === id);
-          return cur.invitation_header_hash === id;
-        });
 
-        console.log('index', index, invite, invitations);
-
-        if (index > -1) {
-          const editedInvitations = [...invitations];
-          editedInvitations[index] = invite;
-
-          this.loadInvitations(editedInvitations);
-        }
-      })
-    )
-  );
 
   readonly insertInvitation = this.effect((invite$: Observable<InvitationEntryInfo>) =>
   invite$.pipe(
