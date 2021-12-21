@@ -55,23 +55,21 @@ export class InvitationService {
 
 
   async signalHandler(payload: any) {
-    console.log("handler called",payload)
-    //console.log(this.invitationsReceived$)
-    //const payload = data.data.payload
+    //console.log("handler called",payload)
     switch (payload.name) {
       case 'invitation received':
         this.invitationsReceived$.next(payload.data.InvitationReceived);
         break;
 
       case 'invitation accepted':
-        this.invitationsAccepted$.next(payload.data);
+        this.invitationsAccepted$.next(payload.data.InvitationAccepted);
         break;
 
       case 'invitation updated':
         break;
 
       case 'invitation rejected':
-        this.invitationsRejected$.next(payload.data);
+        this.invitationsRejected$.next(payload.data.InvitationRejected);
         break;
 
       default:

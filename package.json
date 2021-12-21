@@ -8,6 +8,7 @@
   "scripts": {
     "test": "npm run build:happ && npm t -w @holochain-engineers/starter-ui-tests",
     "start": "npm run start -w @holochain-engineers/starter-ui",
+    "network": "npm run build:happ && concurrently-repeat \"npm run start:agent\"",
     "start:mock": "npm run mock -w @holochain-engineers/starter-ui",
     "start:build": "npm run build:happ && cross-env HC_PORT=$(port) concurrently -k \"npm run start:happ\"",
     "start:happ": "rimraf .hc* && RUST_LOG=warn hc s generate workdir/happ/starter-ui.happ --run=8888 -a test-app network --bootstrap https://bootstrap-staging.holo.host/ quic",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.2.1",
+    "concurrently-repeat": "^0.0.1",
     "cross-env": "^7.0.3",
     "new-port-cli": "^1.0.0",
     "rimraf": "^3.0.2"

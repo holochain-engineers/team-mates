@@ -1,7 +1,14 @@
 # starter-ui
-happ using invites and profiles zomes to get you starter on holochain development
+happ using invites and profiles zomes to get you started on holochain development
 
-the UI architecture template created with angular, is supposed and elegant modular and easy to understand  
+the UI architecture shown below should be elegant, modular and relatively easy to understand and extend  
+
+
+<p align="center">
+    <img src="architecture_multiplex.png" width="750">
+</p>
+
+
 
 ## nix-shell setup
 
@@ -47,8 +54,5 @@ npm run network 2
 
 You can replace "2" by the number of agents that you want to boot up
 
-<p align="center">
-    <img src="architecture_multiplex.png" width="750">
-</p>
 
 

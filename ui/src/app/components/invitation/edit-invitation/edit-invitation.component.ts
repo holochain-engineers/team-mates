@@ -18,11 +18,11 @@ export class EditInvitationComponent {
   }
 
   cancelEdit() {
-    this._invitationStore.cancelEditInvitation();
+    //this._invitationStore.cancelEditInvitation();
   }
 
   saveEdit() {
-    this._invitationStore.saveEditInvitation();
+    //this._invitationStore.saveEditInvitation();
   }
   
 }

@@ -3,11 +3,11 @@ import { InvitationStore } from '../store/invitation.store';
 import { ProfileStore } from '../store/profile.store';
 
 @Component({
-  selector: 'profile-invitation-container',
-  templateUrl: './profile-invitation.component.html',
+  selector: 'component-container',
+  templateUrl: './container.component.html',
   providers: [ProfileStore,InvitationStore]
 })
-export class ProfileInvitationComponent implements OnInit {
+export class ContainerComponent implements OnInit {
   myprofile$ = this._profileStore.getMyProfile()
 
   constructor(

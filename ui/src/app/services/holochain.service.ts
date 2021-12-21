@@ -1,10 +1,8 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { environment } from '@environment';
-//import { HolochainClient  } from '@holochain-open-dev/cell-client'
 import { AppSignalCb, AppSignal, AppWebsocket, CellId, InstalledCell } from '@holochain/conductor-api'
 import { Dictionary, serializeHash } from "../helpers/utils";
 
-//export declare type payloadCb = (payload: any) => void;
 
 export enum ConnectionState{
   OPEN,
@@ -15,7 +13,6 @@ export enum ConnectionState{
 
 export type SignalCallback = {cell_name:string, zome_name:string, cb_fn:AppSignalCb }
 
-
 //tsconfig: "allowSyntheticDefaultImports": true,
 @Injectable({
   providedIn: "root"
@@ -24,17 +21,9 @@ export class HolochainService implements OnDestroy{
   protected appWS!: AppWebsocket 
   protected cellData!: InstalledCell[] 
   protected signalCallbacks: SignalCallback[] = []
-  // public cellClient!: HolochainClient
-
- constructor(
-  //protected appWebsocket: AppWebsocket,
-  //protected cellData: InstalledCell
- ){}
 
   get_pub_key_from_cell(cell:string):string | undefined {
     for(let installedcell of this.cellData){
-      //console.log(serializeHash(installedcell.cell_id[0]))
-     // console.log(installedcell.role_id)
       if (installedcell.role_id == cell)
         return serializeHash(installedcell.cell_id[1])
     };
@@ -43,8 +32,6 @@ export class HolochainService implements OnDestroy{
 
   protected getCellId(cell:string):CellId | undefined {
     for(let installedcell of this.cellData){
-      //console.log(serializeHash(installedcell.cell_id[0]))
-      //console.log(installedcell.role_id)
       if (installedcell.role_id == cell)
         return installedcell.cell_id
     };
@@ -55,28 +42,15 @@ export class HolochainService implements OnDestroy{
         if (!environment.mock){
           try{
             console.log("Connecting to holochain")
-            //const appWs = await this.appWebsocket.connect("ws://localhost:8888");
-               this.appWS =  await AppWebsocket.connect(environment.HOST_URL,1500, (s)=>this.signalHandler(s))
-                //signal => {
-                 // const payload = signal.data.payload;
-                  //if (payload.OfferReceived) {
-                    //this.tstore.storeOffer(payload.OfferReceived);
-               // })
-                //.then(async (connection)=>{
-                //this.hcConnection = connection
-                const appInfo = await this.appWS.appInfo({ installed_app_id: environment.APP_ID});
-                this.cellData = appInfo.cell_data;
-                //this.cellClient = new HolochainClient(connection, cellData);
-                ///this.cellId = appInfo.cell_data[0].cell_id;
-                //this.pstore.myAgentPubKey = serializeHash(this.cellId[1])
-                console.log("Connected to holochain",appInfo.cell_data)
-              //})
+            this.appWS =  await AppWebsocket.connect(environment.HOST_URL,1500, (s)=>this.signalHandler(s))
+            const appInfo = await this.appWS.appInfo({ installed_app_id: environment.APP_ID});
+            this.cellData = appInfo.cell_data;
+            console.log("Connected to holochain",appInfo.cell_data)
           }catch(error){
               console.error("Holochain connection failed:")
               throw(error)
           }
         } else {
-         // this.pstore.myAgentPubKey = "DEFAULT_KEY"
           console.log("you are in Mock mode.. no connections made!")
         }
     }
