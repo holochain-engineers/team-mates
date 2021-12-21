@@ -6,6 +6,7 @@
 /out-tsc
 # Only exists if Bazel was run
 /bazel-out
+/src/app/components/person-container-component/
 
 # dependencies
 /node_modules

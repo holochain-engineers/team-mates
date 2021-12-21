@@ -1,6 +1,8 @@
   <div class="bg-world-splash bg-cover bg-center fixed inset-0 z-20">
-    <div class="min-h-screen flex items-center justify-center">
-      <div class="border-2 border-opacity-50 bg-opacity-60 bg-white border-gray-200 rounded-lg z-30 p-11 max-w-xs shadow-2xl">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+      <div class="border-2 border-opacity-50 bg-opacity-60 bg-white border-gray-200 rounded-lg z-30 p-10 max-w-sm shadow-2xl">
+        <div class="relative flex flex-col md:flex-row"> 
+          <div class="w-full md:w-1/2 grid place-items-center">
             <form class="font-sans text-sm space-y-2 text-center" [formGroup]="profileForm" (ngSubmit)="signUp()">
                 <label style="color:red">{{errorMessage}}</label>
                 <input class="w-full h-10 px-2" type="text" placeholder="username" formControlName="handle" />
@@ -8,7 +10,14 @@
                   REGISTER
                 </button>
             </form>
-         <!-- <button *ngIf="registered" (click)="setAndRoute()">
+          </div>
+          <div class="w-full md:w-1/2 flex flex-col px-2">
+            <ngp-image-picker [_config]="imagePickerConf" ($imageChanged)="onImageChange($event)" [_imageSrc]="imageinitial"></ngp-image-picker>
+            
+          </div>
+        </div> 
+          <!-- <button *ngIf="registered" (click)="setAndRoute()">                <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" class="rounded-xl" />
+
             Continue
           </button>
           <br/><br/>
@@ -20,34 +29,3 @@
       </div>
     </div>
   </div>
-
-  <div class="bg-blue-400 h-screen w-screen">
-    <div class="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
-        <div class="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white sm:mx-0" style="height: 500px">
-            <div class="flex flex-col w-full md:w-1/2 p-4">
-                <div class="flex flex-col flex-1 justify-center mb-8">
-                    <h1 class="text-4xl text-center font-thin">Welcome Back</h1>
-                    <div class="w-full mt-4">
-                        <form class="form-horizontal w-3/4 mx-auto" method="POST" action="#">
-                            <div class="flex flex-col mt-4">
-                                <input id="email" type="text" class="flex-grow h-8 px-2 border rounded border-grey-400" name="email" value="" placeholder="Email">
-                            </div>
-                            <div class="flex flex-col mt-4">
-                                <input id="password" type="password" class="flex-grow h-8 px-2 rounded border border-grey-400" name="password" required placeholder="Password">
-                            </div>
-                            <div class="flex items-center mt-4">
-                                <input type="checkbox" name="remember" id="remember" class="mr-2"> <label for="remember" class="text-sm text-grey-dark">Remember Me</label>
-                            </div>
-                            <div class="flex flex-col mt-8">
-                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded">
-                                    Login
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="hidden md:block md:w-1/2 rounded-r-lg" style="background: url('https://images.unsplash.com/photo-1515965885361-f1e0095517ea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80'); background-size: cover; background-position: center center;"></div>
-        </div>
-    </div>
-</div>

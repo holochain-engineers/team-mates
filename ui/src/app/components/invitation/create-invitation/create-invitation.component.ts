@@ -8,7 +8,7 @@ import { InvitationStore } from '../../../store/invitation.store';
 @Component({
   selector: 'create-invitation',
   templateUrl: './create-invitation.component.html',
-  providers: [InvitationStore],
+  //providers: [InvitationStore],
 })
 export class CreateInvitationComponent {
   @Input() invitation!: InvitationEntryInfo;

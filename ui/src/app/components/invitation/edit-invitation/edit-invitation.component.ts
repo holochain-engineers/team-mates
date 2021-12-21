@@ -5,7 +5,6 @@ import { InvitationStore } from '../../../store/invitation.store';
 @Component({
   selector: 'edit-invitation',
   templateUrl: './edit-invitation.component.html',
-  providers: [InvitationStore],
 })
 export class EditInvitationComponent {
   @Input() invitation!: InvitationEntryInfo;
@@ -15,7 +14,7 @@ export class EditInvitationComponent {
   ) {}
 
   editInvitation() {
-    this._invitationStore.setEditedInvitation(this.invitation);
+    //this._invitationStore.setEditedInvitation(this.invitation);
   }
 
   cancelEdit() {

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Profile } from '../../models/profile';
 import { ProfileStore } from '../../store/profile.store';
+import { ImagePickerConf } from 'ngp-image-picker';
 
 
 @Component({
@@ -18,6 +19,18 @@ export class RegistrationComponent implements OnInit {
     handle: ["", Validators.required],
     avatar: ["", Validators.required]
   });
+  imagePickerConf: ImagePickerConf = {
+    borderRadius: '4px',
+    language: 'en',
+    width: '100px',
+    height: '100px',
+    hideDeleteBtn: true,
+    hideDownloadBtn: true,
+    hideEditBtn: true,
+    hideAddBtn: true
+  };
+
+  imageinitial = "https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 
   constructor( private fb: FormBuilder, private _profileStore: ProfileStore){}
 
@@ -42,6 +55,10 @@ export class RegistrationComponent implements OnInit {
         //this.errorMessage = error
       }
   };
+
+  onImageChange(event:any){
+    console.log(event)
+  }
 
   /*setAndRoute(profile:Profile){
     console.log("redirected from signup")

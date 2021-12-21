@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { InvitationService } from '../services/invitation.service';
 import { Invitation, InvitationEntryInfo } from '../models/invitation';
@@ -124,7 +124,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
 
 
     // effects (future time network)
-    readonly upsertInvitations = this.effect((invite$: Observable<InvitationEntryInfo>) =>
+  readonly upsertInvitations = this.effect((invite$: Observable<InvitationEntryInfo>) =>
     invite$.pipe(
       withLatestFrom(this.selectInvitations()),
       tap<[InvitationEntryInfo, InvitationEntryInfo[]]>(([invite, invitations]) => {
@@ -149,24 +149,21 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     )
   );
 
-  /*
-    // effects (future time UI) 
+  
+    /* effects (future time UI) 
   // Each new call of getMovie(id) pushed that id into movieId$ stream.
-  readonly upsertInvitation = this.effect((invite$: Observable<InvitationEntryInfo>) => {
-    return invite$.pipe(
+  readonly getPendingInvitations = this.effect((invites$: Observable<InvitationEntryInfo[]>) => {
+    return invites$.pipe(
       // 👇 Handle race condition with the proper choice of the flattening operator.
-      switchMap((id) => id.pipe(
+      switchMap(() => of(this._invitationService.getMyPendingInvitations()).pipe(
         //👇 Act on the result within inner pipe.
-        tap({
-          next: (movie) => this.addMovie(movie),
-          error: (e) => this.logError(e),
-        }),
-        // 👇 Handle potential error within inner pipe.
-        catchError(() => EMPTY),
-      )),
-    );
-  });
-*/
+        tap<[InvitationEntryInfo[]]>((invitations]) => {
+            this.loadInvitations(invitations)
+        })),
+      )
+    )
+  });*/
+
 /*
   readonly setEditorId = this.updater(
     (state, editorId: number | undefined) => ({ ...state, editorId })
@@ -244,6 +241,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
 
   //this currently is responded to by an acceptInvitation signal.. so no need to listen or wait for a response
   sendNewInvitation(agentPubKeyB64_arr: string[]){
+    console.log("new invite:",agentPubKeyB64_arr)
     this._invitationService.sendInvitation(agentPubKeyB64_arr)
   }
 
@@ -257,6 +255,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
 
   async loadInvitationEntries():Promise<void> {
     const invitations = await this._invitationService.getMyPendingInvitations()
+    console.log("invitations:",invitations)
     this.loadInvitations(invitations)
   }
 }

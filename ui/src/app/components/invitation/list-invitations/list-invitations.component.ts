@@ -50,7 +50,7 @@ export class InvitationListComponent implements OnDestroy{
   hashListToAgentList(hashlist:string[]):string[] {
     const res:string[] = []
     for(const hash of hashlist){
-      res.push(this.profileDictionary[hash])
+      res.push(" "+this.profileDictionary[hash])
     }
     return res
   }

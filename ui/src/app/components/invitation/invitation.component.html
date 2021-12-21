@@ -1,6 +1,11 @@
-<div class="p-4 w-full" aria-label="invitation-list-block">
-  <list-invitations></list-invitations>
+<div class="flex flex-wrap">
+  <div class="p-4 md:w-1/4 grow-0" aria-label="create-invitation-block">
+    <create-invitation></create-invitation>
+  </div>
+  <div class="p-4 md:w-3/4" aria-label="invitation-list-block">
+    <list-invitations></list-invitations>
+  </div>
 </div>
 <ng-container *ngIf="(selectedInvitation$ | async); let editInvite">
-  <create-invitation [invitation]="$any(editInvite)"></create-invitation>
+  <edit-invitation [invitation]="$any(editInvite)"></edit-invitation>
 </ng-container>

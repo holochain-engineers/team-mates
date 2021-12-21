@@ -1,15 +1,10 @@
-<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12 bg-green-mountain bg-contain">
+<div class="bg-green-mountain bg-cover">
   <ng-container *ngIf="(myprofile$ | async); else noprofile; let profile">
     <div class="container px-5 py-24 mx-auto">
-      <div class="flex flex-wrap -m-4">
-        <div class="p-4 md:w-1/2 w-full" aria-label="profile-block">
+        <div class="p-4 w-2/3" aria-label="profile-block">
           <app-profile [profile]="profile"></app-profile>
         </div>
-        <div class="p-4 md:w-1/2 w-full" aria-label="create-invitation-block">
-          <create-invitation></create-invitation>
-        </div>
         <invitation></invitation>
-      </div>
     </div>
   </ng-container>
   <ng-template #noprofile>
