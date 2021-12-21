@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
-import { Profile } from '../../models/profile';
-import { ProfileStore } from '../../store/profile.store';
+import { Profile } from '../../../models/profile';
+import { ProfileStore } from '../../../store/profile.store';
 import { ImagePickerConf } from 'ngp-image-picker';
 
 
@@ -60,25 +60,4 @@ export class RegistrationComponent implements OnInit {
     console.log(event)
   }
 
-  /*setAndRoute(profile:Profile){
-    console.log("redirected from signup")
-    sessionStorage.setItem("userhash",this.pstore.myAgentPubKey)
-    sessionStorage.setItem("username",profile.nickname)
-    sessionStorage.setItem("avatar",profile.fields.avatar)
-    this.router.navigate(["home"]);
-  }*/
-
-
-  /*isRegistered(){
-    const profile = this.pstore.MyProfile
-    console.log(profile)
-    if(profile){
-      console.log("myagentkey:",this.pstore.myAgentPubKey)
-     // console.log(profile)
-      this.registered = true
-     // this.setAndRoute(profile)
-    } else {
-      this.registered = false
-    }   
-  }*/
 }

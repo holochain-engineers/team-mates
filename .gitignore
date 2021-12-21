@@ -5,7 +5,7 @@
 /ui/node_modules/
 /ui/dist/
 /ui/.angular
-ng-script.sh
+.ng-script.sh
 
 
 # holochain

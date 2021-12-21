@@ -15,8 +15,8 @@ import { InvitationListComponent } from './components/invitation/list-invitation
 import { CreateInvitationComponent } from './components/invitation/create-invitation/create-invitation.component';
 import { EditInvitationComponent } from './components/invitation/edit-invitation/edit-invitation.component';
 import { ContainerComponent } from './components/container.component';
-import { ProfileComponent } from './components/profile/profile.component'
-import { RegistrationComponent } from './components/registration/registration.component'
+import { ProfileComponent } from './components/profiles/profile/profile.component'
+import { RegistrationComponent } from './components/profiles/registration/registration.component'
 
 export function initializeConnection(holochainService: HolochainService) {
   return (): Promise<any> => { 

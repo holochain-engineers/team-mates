@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy} from "@angular/core";
-import { KeyValue, Profile } from "../../models/profile"
+import { KeyValue, Profile } from "../../../models/profile"
 
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent implements OnInit {
   @Input() profile!: Profile
@@ -16,7 +16,6 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     if (!this.profile){
       this.errorMessage = "profile is missing"
-      console.log("blah")
     }
     else{
       console.log("profile:",this.profile)
@@ -31,6 +30,8 @@ export class ProfileComponent implements OnInit {
   setAgent(){
     //this.agentData = this.p_store.profileOf(this.agentKey)
   }
-  add(){}
+  add(){
+    //TODO submit form data
+  }
 
 }
