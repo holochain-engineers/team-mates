@@ -5,10 +5,10 @@ import { ProfileStore } from '../../../store/profile.store';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: "app-profile",
-  templateUrl: "./profile.component.html",
+  selector: "all-profiles",
+  templateUrl: "./all-profiles.component.html",
 })
-export class ProfileComponent implements OnInit {
+export class AllProfilesComponent implements OnInit {
   @Input() profile!: Profile
   fields: KeyValue[] = []
   errorMessage:string = ""

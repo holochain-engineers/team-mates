@@ -24,7 +24,7 @@
     "@holochain/conductor-api": "^0.2.4",
     "@ng-select/ng-select": "^8.1.1",
     "@ngrx/component-store": "^13.0.2",
-    "ngp-image-picker": "^1.5.2",
+    "ngx-image-cropper": "^5.0.1",
     "resize-observer": "^1.0.4",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.1",

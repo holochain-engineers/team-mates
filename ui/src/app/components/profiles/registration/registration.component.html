@@ -1,31 +1,21 @@
-  <div class="bg-world-splash bg-cover bg-center fixed inset-0 z-20">
+  <div class="bg-river-rock bg-cover bg-center fixed inset-0 z-20">
     <div class="min-h-screen flex flex-col items-center justify-center">
       <div class="border-2 border-opacity-50 bg-opacity-60 bg-white border-gray-200 rounded-lg z-30 p-10 max-w-sm shadow-2xl">
-        <div class="relative flex flex-col md:flex-row"> 
-          <div class="w-full md:w-1/2 grid place-items-center">
-            <form class="font-sans text-sm space-y-2 text-center" [formGroup]="profileForm" (ngSubmit)="signUp()">
+        <div class="relative flex flex-col md:flex-row">
+          <div class="w-full grid place-items-center">
+            <form class="font-sans text-sm space-y-2 text-center" [formGroup]="regform" (ngSubmit)="signUp()">
+              <ng-container *ngIf="errorMessage; else message">
                 <label style="color:red">{{errorMessage}}</label>
-                <input class="w-full h-10 px-2" type="text" placeholder="username" formControlName="handle" />
-                <button class="w-full py-3 px-4 bg-gray-600 text-white hover:bg-blue-300 border" >
+              </ng-container>
+              <ng-template #message>
+                <label style="color:gray">Choose a username</label>
+              </ng-template>
+                <input class="w-full rounded-md px-2 h-10" type="text" placeholder="username" formControlName="handle" />
+                <button class="w-full rounded-md h-10 bg-gray-600 text-white hover:bg-blue-300 border" >
                   REGISTER
                 </button>
             </form>
           </div>
-          <div class="w-full md:w-1/2 flex flex-col px-2">
-            <ngp-image-picker [_config]="imagePickerConf" ($imageChanged)="onImageChange($event)" [_imageSrc]="imageinitial"></ngp-image-picker>
-            
-          </div>
-        </div> 
-          <!-- <button *ngIf="registered" (click)="setAndRoute()">                <img src="https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="tailwind logo" class="rounded-xl" />
-
-            Continue
-          </button>
-          <br/><br/>
-          <button *ngIf="registered" (click)="setAndRoute()">
-            unregister
-            *ngIf="!registered"
-            *ngIf="!registered"
-          </button>-->
       </div>
     </div>
   </div>

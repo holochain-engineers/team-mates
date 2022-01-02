@@ -1,9 +1,14 @@
 <div class="bg-green-mountain bg-cover">
   <ng-container *ngIf="(myprofile$ | async); else noprofile; let profile">
     <div class="container px-5 py-24 mx-auto">
-        <div class="p-4 w-2/3" aria-label="profile-block">
+      <div class="flex flex-wrap">
+        <div class="p-4 md:w-1/2" aria-label="profile-block">
           <app-profile [profile]="profile"></app-profile>
         </div>
+        <div class="p-4 md:w-1/2" aria-label="profile-block">
+          <all-profiles [profile]="profile"></all-profiles>
+        </div>
+      </div>
         <invitation></invitation>
     </div>
   </ng-container>

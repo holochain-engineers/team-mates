@@ -1,63 +1,38 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Profile } from '../../../models/profile';
 import { ProfileStore } from '../../../store/profile.store';
-import { ImagePickerConf } from 'ngp-image-picker';
-
 
 @Component({
   selector: 'registration',
   templateUrl: './registration.component.html',
-  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegistrationComponent implements OnInit {
-  //user: Agent;
-  registered: boolean =false//Promise<boolean> = new Promise(()=>{return false});
-  errorMessage: string = "Sign up"
-  avatarLink: string = "../../assets/img/avatar_placeholder.jpg"
-  profileForm = this.fb.group({
-    handle: ["", Validators.required],
-    avatar: ["", Validators.required]
-  });
-  imagePickerConf: ImagePickerConf = {
-    borderRadius: '4px',
-    language: 'en',
-    width: '100px',
-    height: '100px',
-    hideDeleteBtn: true,
-    hideDownloadBtn: true,
-    hideEditBtn: true,
-    hideAddBtn: true
-  };
+  errorMessage: string = ""
+  regform: FormGroup
 
-  imageinitial = "https://images.pexels.com/photos/4381392/pexels-photo-4381392.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-
-  constructor( private fb: FormBuilder, private _profileStore: ProfileStore){}
+  constructor( private fb: FormBuilder, private _profileStore: ProfileStore){
+    this.regform = this.fb.group({
+      handle: ["", [Validators.required, Validators.minLength(3)]],
+    });
+  }
 
   ngOnInit() {}
 
- async signUp(){
+  async signUp(){
     //console.log("signup called")
-    const handle:string = this.profileForm.get("handle")?.value;
-    this.avatarLink = this.profileForm.get("avatar")?.value;
-    if (handle.length == 0) {
+    const handle:string = this.regform.get("handle")?.value;
+    if (this.regform.invalid) {
+      this.errorMessage = "Username required (min 3 characters)"
       return;
     }
-    if (this.avatarLink.length == 0) {
-      this.avatarLink = "../../assets/img/avatar_placeholder.jpg";
-    }
-    const profile:Profile = {nickname:handle, fields:{avatar:this.avatarLink}}
+    const profile:Profile = {nickname:handle, fields:{}}
       try{
         this._profileStore.setMyProfile(profile) 
         console.log("user registered")
-        //this.setAndRoute(profile)
       }catch(error){
-        //this.errorMessage = error
+        this.errorMessage = JSON.stringify(error)
       }
   };
-
-  onImageChange(event:any){
-    console.log(event)
-  }
 
 }
