@@ -1,7 +1,67 @@
-<section class="relative flex flex-col space-y-3 md:space-y-0 bg-white shadow-lg sm:rounded-3xl sm:p-10 bg-clip-padding bg-opacity-60 border border-gray-200" style="backdrop-filter: blur(20px);">
-  <div class="text-lg text-gray-600">  Pending Invitations</div><hr><br>
-  <div class="text-sm text-gray-800">  Outgoing invitations</div><br>
-  <table mat-table [dataSource]="outgoingInvitations$" class="mat-elevation-z8 shadow-lg sm:rounded-3xl invites-pending-table">
+<!--space-y-3 md:space-y-0 ???-->
+<section class="text-gray-600 bg-white shadow-lg sm:rounded-3xl rounded-lg bg-clip-padding bg-opacity-40 border border-gray-200 backdrop-blur-sm">
+<div class="relative flex flex-col sm:p-8 p-4">
+  <div class="text-lg">  Pending Invitations</div><hr><br>
+  <div class="text-sm mt-2 text-black">  Outgoing invitations</div>
+  <table class="table-auto text-black rounded-xl mt-2 shadow-2xl overflow-hidden">
+    <thead class="bg-gradient-to-tr from-indigo-600 to-purple-600 text-white font-bold text-md">
+      <tr>
+        <th class="p-2">Inviter</th>
+        <th class="p-2">Invitees</th>
+        <th class="p-2">Timestamp</th>
+        <th class="p-2">Invitees who accepted</th>
+        <th class="p-2">Invitees who rejected</th>
+        <th class="p-2">Action</th>
+      </tr>
+    </thead>
+    <tbody class="divide-white">
+      <ng-container *ngFor="let inv of (outgoingInvitations$ | async);">
+        <tr class="border-t">
+          <td class="px-2 py-1">{{hashToAgent(inv.invitation.inviter)}}</td>
+          <td class="p-2">{{hashListToAgentList(inv.invitation.invitees)}}</td>
+          <td class="p-2">{{inv.invitation.timestamp }}</td>
+          <td class="p-2">{{hashListToAgentList(inv.invitees_who_accepted)}}</td>
+          <td class="p-2">{{hashListToAgentList(inv.invitees_who_rejected)}}</td>
+          <td class="p-2">
+            <button (click)="reject(inv.invitation_header_hash)">
+              <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>         
+           </button></td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <br>
+  <ng-container *ngIf="(incommingInvitations$ | async)!.length > 0">
+    <div class="text-sm mt-2 text-black">Incoming invitations</div>
+    <table class="table-auto text-black rounded-xl mt-2 shadow-2xl overflow-hidden">
+      <thead class="bg-gradient-to-tr from-indigo-600 to-purple-600 text-white font-bold text-md">
+        <tr>
+          <th class="p-2">Inviter</th>
+          <th class="p-2">Invitees</th>
+          <th class="p-2">Timestamp</th>
+          <th class="p-2">Invitees who accepted</th>
+          <th class="p-2">Invitees who rejected</th>
+          <th class="p-2">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-white">
+        <ng-container *ngFor="let inv of (incommingInvitations$ | async);">
+          <tr class="border-t">
+            <td class="px-2 py-1">{{hashToAgent(inv.invitation.inviter)}}</td>
+            <td class="p-2">{{hashListToAgentList(inv.invitation.invitees)}}</td>
+            <td class="p-2">{{inv.invitation.timestamp }}</td>
+            <td class="p-2">{{hashListToAgentList(inv.invitees_who_accepted)}}</td>
+            <td class="p-2">{{hashListToAgentList(inv.invitees_who_rejected)}}</td>
+            <td class="p-2">
+              <button (click)="reject(inv.invitation_header_hash)">
+                <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>         
+            </button></td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </ng-container>
+  <!--<table mat-table [dataSource]="outgoingInvitations$" class="mat-elevation-z8 shadow-lg sm:rounded-3xl invites-pending-table">
     <ng-container matColumnDef="inviter">
       <th mat-header-cell *matHeaderCellDef> Inviter </th>
       <td mat-cell *matCellDef="let element"> {{hashToAgent(element.invitation.inviter)}} </td>
@@ -81,5 +141,6 @@
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+  </table>-->
+</div> 
 </section>

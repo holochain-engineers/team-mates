@@ -8,7 +8,6 @@ import { InvitationStore } from '../../../store/invitation.store';
 @Component({
   selector: 'create-invitation',
   templateUrl: './create-invitation.component.html',
-  //providers: [InvitationStore],
 })
 export class CreateInvitationComponent {
   @Input() invitation!: InvitationEntryInfo;
@@ -19,9 +18,6 @@ export class CreateInvitationComponent {
     this.people$ = this._profileStore.selectKeyNickArray()
   }
 
-  ngOnInit() {
-  }
-
   send() {
     console.log("creating invite ",this.selectedPeople)
     if (this.selectedPeople.length > 0){
@@ -30,14 +26,9 @@ export class CreateInvitationComponent {
     }
   }
 
-  cancel(){
+  clear(){
     this.selectedPeople = []
   }
 
-
-  clearModel() {
-      console.log("hereo ",this.selectedPeople)
-      //this.selectedPeople = [];
-  }
   
 }

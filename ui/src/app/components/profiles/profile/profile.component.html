@@ -1,5 +1,5 @@
 
-    <section class="text-gray-600 body-font bg-white shadow-lg sm:rounded-3xl rounded-lg sm:p-8 p-4 bg-clip-padding bg-opacity-60 border border-gray-200" style="backdrop-filter: blur(20px);">
+    <section class="text-gray-600 body-font bg-white shadow-lg sm:rounded-3xl rounded-lg sm:p-8 p-4 bg-clip-padding bg-opacity-40 border border-gray-200 backdrop-blur-sm">
       <div class="text-lg">Profile</div>
       <hr><br>
       <div class="relative flex flex-col md:flex-row"> 
@@ -9,7 +9,9 @@
               <img [src]="croppedImage" class="rounded-full"/>
             </ng-container>
             <ng-template #default>
-                <img src="./assets/blank_avatar-gray.png" alt="image"/>
+              <div class="flex-shrink">
+                <img class="md:pb-0 pb-8 md:px-0 px-20" src="./assets/blank_avatar-gray.png" alt="image"/>
+              </div>
             </ng-template>
             <input type="file" name="myfile" style="display:none" (change)="fileChangeEvent($event)">
           </label>

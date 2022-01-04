@@ -19,21 +19,27 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
    /* selectors */
 
-  selectProfile(hash: string){
+  selectAgentProfile(hash: string){
     return this.select((state) => state.agentProfiles.find(i => i.agent_pub_key === hash)!);
   }
-  selectProfiles(){
+  selectAgentProfiles(){
     return this.select(({ agentProfiles }) => agentProfiles);
+  }
+  
+  selectProfiles(){
+    return this.select(({ agentProfiles }) => agentProfiles).pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
+      return ap.profile!
+    })));
   }
 
   selectKeyNickArray()  {
-   return this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
+   return this.selectAgentProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
       return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname} as KeyNick
     })))
   }
 
-  selectKeyNickIndexes() {
-    return this.selectProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
+  selectKeyNickIndexes() { //dictionary format
+    return this.selectAgentProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
       return {[ap.agent_pub_key]:ap.profile!.nickname}})))
   }
 
@@ -60,7 +66,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
 
   async loadProfileEntries():Promise<void> {
-    
+    //in the future we might not want to load all the profiles.. and use the search facility instead
     const profiles = await this._profileService.getAllProfiles()
     this.loadProfiles(profiles)
     const agentprofile = await this._profileService.getMyProfile()
@@ -72,7 +78,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
   getMyProfile(){
     console.log("agentkey",this.mypubkey)
-    return this.selectProfile(this.mypubkey).pipe( 
+    return this.selectAgentProfile(this.mypubkey).pipe( 
       pluck('profile'))
   }
 

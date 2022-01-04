@@ -28,7 +28,7 @@ export class ProfileService {
       return new Promise<AgentProfile | undefined>((resolve) => {
         setTimeout(()=> {
           const response: AgentProfile = {agent_pub_key:mockMyAgentProfile.agent_pub_key,profile:mockMyAgentProfile.profile}
-          resolve(response)},1000)
+          resolve(response)},500)
       })
     return this.callZome('get_my_profile', null);
   }
