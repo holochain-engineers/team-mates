@@ -133,6 +133,10 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     this._invitationService.rejectInvitation(header_hash)
   }
 
+  clearInvitation(header_hash:string){
+    this._invitationService.clearInvitation(header_hash)
+  }
+
   async loadInvitationEntries():Promise<void> {
     const invitations = await this._invitationService.getMyPendingInvitations()
     console.log("invitations:",invitations)

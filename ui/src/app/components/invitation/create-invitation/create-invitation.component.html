@@ -14,10 +14,10 @@
       </ng-select>
       <div class="flex flex-row mt-3">
         <ng-container *ngIf="selectedPeople.length > 0">
-          <button (click)="send()">
-            <svg class="fill-white hover:fill-black w-6 h-6" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M663.3 336.7V119.8H119.8v216.9h543.5zM500 880.3c44.2 0 82.5-16.2 114.8-48.5s48.5-70.6 48.5-114.8-16.1-82.5-48.5-114.8-70.7-48.5-114.8-48.5-82.4 16.2-114.8 48.5c-32.4 32.3-48.5 70.6-48.5 114.8s16.2 82.5 48.5 114.8 70.6 48.5 114.8 48.5zM773.1 10 990 226.9v653.3c0 28.9-11.1 54.4-33.2 76.5s-47.6 33.2-76.5 33.2H119.8c-30.6 0-56.6-11.1-77.9-33.2-21.3-22-31.9-47.5-31.9-76.4V119.7c0-28.9 10.6-54.4 31.9-76.5C63.2 21.1 89.1 10 119.8 10h653.3z"/></svg>
+          <button title="Send" (click)="send()">
+            <svg class="fill-white hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="m10 920 980-420L10 80v326.7L710 500 10 593.3V920z"/></svg>
           </button>
-          <button class="mx-2" (click)="clear()">
+          <button title="Cancel" class="mx-2" (click)="clear()">
             <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>
           </button>
         </ng-container>

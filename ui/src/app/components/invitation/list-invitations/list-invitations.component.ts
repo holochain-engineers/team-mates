@@ -21,7 +21,7 @@ export class InvitationListComponent implements OnDestroy{
   
   constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {
     this.outgoingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
-    this.incommingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter !== this._profileStore.mypubkey)));
+    this.incommingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
   }
 
 
@@ -40,6 +40,10 @@ export class InvitationListComponent implements OnDestroy{
 
   reject(header_hash:string){
     this._invitationStore.rejectInvitation(header_hash)
+  }
+
+  cancel(header_hash:string){
+    this._invitationStore.clearInvitation(header_hash)
   }
 
   hashToAgent(hash:string):string{
