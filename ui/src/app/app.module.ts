@@ -6,7 +6,7 @@ import { ClickOutsideDirective } from './helpers/clickout';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppMaterialModule } from "./helpers/material.module";
+//import { AppMaterialModule } from "./helpers/material.module";
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -44,7 +44,7 @@ export function initializeConnection(holochainService: HolochainService) {
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-    AppMaterialModule,
+   // AppMaterialModule,
     ImageCropperModule
   ],
   providers: [ HolochainService,

@@ -4,23 +4,26 @@ import { environment } from '@environment';
 import { AgentProfile, Profile, mockMyAgentProfile, mock1AgentProfile, mockAgentProfiles } from '../models/profile';
 import { AgentPubKeyB64 } from '@holochain-open-dev/core-types';
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable({providedIn: 'root'})
 export class ProfileService {
-  public zomeName = 'profiles'
-  private cellName = 'profile_invitation'
-  public agent_pub_key?: string //= "DEFAULT_KEY"
+  private _cellName = ''
+  private _zomeName = 'profiles'
+  private _agent_pub_key?: string //= "DEFAULT_KEY"
 
-  constructor(private hcs:HolochainService) { }
+  constructor(private _holochainService:HolochainService) { }
+
+  subscribe_to_cell(cell:string){
+    this._cellName = cell
+    this._holochainService.registerCallback(cell, this._zomeName, (s)=>this.signalHandler(s))
+  }
 
   getMyAgentkey(){
     if (environment.mock){ 
-      this.agent_pub_key = mockMyAgentProfile.agent_pub_key
+      this._agent_pub_key = mockMyAgentProfile.agent_pub_key
       return mockMyAgentProfile.agent_pub_key
     }
-    this.agent_pub_key = this.hcs.get_pub_key_from_cell(this.cellName)
-    return this.agent_pub_key
+    this._agent_pub_key = this._holochainService.get_pub_key_from_cell(this._cellName)
+    return this._agent_pub_key
   }
 
   getMyProfile(): Promise<AgentProfile | undefined>{
@@ -32,17 +35,6 @@ export class ProfileService {
       })
     return this.callZome('get_my_profile', null);
   }
-
-  /*getMyProfile(): Promise<Observable<AgentProfile>> {
-    //let mock = undefined
-    if (environment.mock)
-      return new Promise<Observable<AgentProfile>>((resolve) => {
-        setTimeout(()=> {
-          this.agent_pub_key = mockMyAgentProfile.agent_pub_key
-          resolve(of(mockMyAgentProfile))},3000)
-      })
-    return this.callZome('get_my_profile', null).then();
-  }*/
 
   getAgentProfile(agentPubKey: AgentPubKeyB64): Promise<AgentProfile> {
     if (environment.mock)
@@ -70,12 +62,14 @@ export class ProfileService {
 
   createProfile(newprofile: Profile): Promise<AgentProfile> {
     if (environment.mock)
-      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this.agent_pub_key!,profile:newprofile}),2000)})
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),2000)})
     return this.callZome('create_profile', newprofile);
   }
 
   private callZome(fn_name: string, payload: any) {
-    return this.hcs.call(this.cellName, this.zomeName, fn_name, payload);
+    return this._holochainService.call(this._cellName, this._zomeName, fn_name, payload);
   }
+
+  private signalHandler(payload: any) {}
   
 }

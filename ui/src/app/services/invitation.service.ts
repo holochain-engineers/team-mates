@@ -1,21 +1,21 @@
 import { AgentPubKeyB64, HeaderHashB64 } from '@holochain-open-dev/core-types';
 import { InvitationEntryInfo, mockInvitationEntryArray } from '../models/invitation';
 import { HolochainService } from './holochain.service';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '@environment';
 
-@Injectable({ providedIn: 'root' })
+//@Injectable()
 export class InvitationService {
-  invitationsReceived$:Subject<InvitationEntryInfo>  //new
+  invitationsReceived$ = new Subject<InvitationEntryInfo>()  //new
   invitationsAccepted$ = new Subject<InvitationEntryInfo>(); //modified
   invitationsRejected$ = new Subject<InvitationEntryInfo>(); //modified
-  private zomeName = 'invitations'
-  private cellName = 'profile_invitation'
-
-  constructor(private holochainService: HolochainService, ) {
-    this.invitationsReceived$= new Subject<InvitationEntryInfo>();
-    this.holochainService.registerCallback(this.cellName, this.zomeName, (s)=>this.signalHandler(s))
+  private _cellName = ''
+  private _zomeName = 'invitations'
+  
+  constructor(private _holochainService: HolochainService, cellname:string) {
+    this._cellName = cellname
+    this._holochainService.registerCallback(cellname, this._zomeName, (s)=>this.signalHandler(s))
   }
 
   sendInvitation(input: AgentPubKeyB64[] | undefined): Promise<any>{
@@ -31,30 +31,30 @@ export class InvitationService {
       return this.callZome('get_my_pending_invitations', null);
   }
 
-  async acceptInvitation(
+  acceptInvitation(
     invitation_header_hash: HeaderHashB64
   ): Promise<boolean> {
     return this.callZome('accept_invitation', invitation_header_hash);
   }
 
-  async rejectInvitation(
+  rejectInvitation(
     invitation_header_hash: HeaderHashB64
   ): Promise<boolean> {
     return this.callZome('reject_invitation', invitation_header_hash);
   }
 
-  async clearInvitation(
+  clearInvitation(
     invitation_header_hash: HeaderHashB64
   ): Promise<boolean> {
     return this.callZome('clear_invitation', invitation_header_hash);
   }
 
   private callZome(fn_name: string, payload: any): Promise<any> {
-    return this.holochainService.call(this.cellName, this.zomeName, fn_name, payload);
+    return this._holochainService.call(this._cellName, this._zomeName, fn_name, payload);
   }
 
 
-  async signalHandler(payload: any) {
+  private signalHandler(payload: any) {
     //console.log("handler called",payload)
     switch (payload.name) {
       case 'invitation received':

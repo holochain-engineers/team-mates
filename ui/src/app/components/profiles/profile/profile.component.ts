@@ -87,6 +87,7 @@ export class ProfileComponent implements OnInit {
   }
 
   cropfinished(){
+    console.log("image data",this.croppedImage)
     this.imageChangedEvent = ''
     this.profile.fields['avatar'] = this.croppedImage
     this._profileStore.setMyProfile(this.profile)

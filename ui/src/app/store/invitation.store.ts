@@ -1,24 +1,26 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable, of, Subject, Subscription } from 'rxjs';
-import { switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { tap, withLatestFrom } from 'rxjs/operators';
 import { InvitationService } from '../services/invitation.service';
-import { Invitation, InvitationEntryInfo } from '../models/invitation';
+import { InvitationEntryInfo } from '../models/invitation';
+import { HolochainService } from '../services/holochain.service';
 
 
 export interface InvitationState {
   invitations: InvitationEntryInfo[];
 }
 
-@Injectable()
+//TODO : make the ComponentStore composition based so we can dynamically create new stores for cell clones
+@Injectable()  
 export class InvitationStore extends ComponentStore<InvitationState> implements OnDestroy {
- // private _saveEditInvite$ = new Subject<void>();
- // private _saveNewInvite$ = new Subject<AgentPubKeyB64[]>();
   private _subs = new Subscription();
+  private _invitationService: InvitationService
 
-  constructor(private readonly _invitationService: InvitationService) {
+  constructor(holochainService:HolochainService){//private readonly _invitationService: InvitationService) {
     super({invitations: []});
-    
+    this._invitationService = new InvitationService(holochainService,"team-mates")
+
     this._subs.add(
       this._invitationService.invitationsReceived$.subscribe({
         next: (invitationEntryInfo) => {
@@ -63,9 +65,6 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     return this.select(({ invitations }) => invitations);
   }
 
-  //readonly editedInvitation$ = this.select(({ editedInvitation }) => editedInvitation).pipe(
-  //  tap((invitationEntryInfo) => console.log('editedInvitation$', invitationEntryInfo))
-  //);
 
   /* updaters */
 
@@ -115,11 +114,8 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     this._subs.unsubscribe();
   }
 
-  //saveEditInvitation() {
-  //  this._saveEditInvite$.next();
-  //}
+  /* call zome functions */
 
-  //this currently is responded to by an acceptInvitation signal.. so no need to listen or wait for a response
   sendNewInvitation(agentPubKeyB64_arr: string[]){
     console.log("new invite:",agentPubKeyB64_arr)
     this._invitationService.sendInvitation(agentPubKeyB64_arr)
