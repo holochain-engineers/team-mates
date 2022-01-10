@@ -1,6 +1,6 @@
 ---
 manifest_version: "1"
-name: starter-ui
+name: team-mates
 description: ~
 roles:
   - id: profile_invitation
@@ -8,7 +8,7 @@ roles:
       strategy: create
       deferred: false
     dna:
-      bundled: "../dna/starter-ui.dna"
+      bundled: "../dna/team-mates.dna"
       properties: ~
       uuid: ~
       version: ~

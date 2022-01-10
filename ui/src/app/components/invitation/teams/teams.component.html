@@ -1,0 +1,16 @@
+<!--Using items input-->
+
+<section class="text-gray-600 z-10 sm:rounded-3xl rounded-lg sm:p-8 p-4 body-font bg-white shadow-lg  bg-clip-padding bg-opacity-60 border border-gray-200 backdrop-blur-sm">
+    <div class="relative flex flex-col" >
+      <div class="text-lg">My Teams</div><hr><br>
+        <ng-container *ngFor="let team of (team$ | async); index as i">
+          <div class="flex flex-row mt-2 text-sm text-gray-900">
+            <span>{{i+1}}. </span>
+            <ng-container *ngFor="let field of team">
+              <span> {{hashToAgent(field)}}, </span>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+</section>
+

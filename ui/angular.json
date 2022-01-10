@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "starter-ui": {
+    "team-mates": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -41,7 +41,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/starter-ui",
+            "outputPath": "dist/team-mates",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -107,13 +107,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "starter-ui:build:production"
+              "browserTarget": "team-mates:build:production"
             },
             "development": {
-              "browserTarget": "starter-ui:build:development"
+              "browserTarget": "team-mates:build:development"
             },
             "mock": {
-              "browserTarget": "starter-ui:build:mock"
+              "browserTarget": "team-mates:build:mock"
             }
           },
           "defaultConfiguration": "development"
@@ -121,11 +121,11 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "starter-ui:build"
+            "browserTarget": "team-mates:build"
           }
         }
       }
     }
   },
-  "defaultProject": "starter-ui"
+  "defaultProject": "team-mates"
 }

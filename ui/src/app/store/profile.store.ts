@@ -1,3 +1,4 @@
+import { keyframes } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { pluck, map} from 'rxjs/operators';
@@ -23,7 +24,12 @@ export class ProfileStore extends ComponentStore<ProfileState> {
   selectAgentProfile(hash: string){
     return this.select((state) => state.agentProfiles.find(i => i.agent_pub_key === hash)!);
   }
-  selectAgentProfiles(){
+  
+  selectAgentProfiles(hasharr: string[]){
+    return this.select((state) => state.agentProfiles.filter(ap=>{hasharr.includes(ap.agent_pub_key)})) 
+  }
+
+  selectAllProfiles(){
     return this.select(({ agentProfiles }) => agentProfiles);
   }
   
@@ -34,13 +40,13 @@ export class ProfileStore extends ComponentStore<ProfileState> {
   }
 
   selectKeyNickArray()  {
-   return this.selectAgentProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
+   return this.selectAllProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
       return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname} as KeyNick
     })))
   }
 
   selectKeyNickIndexes() { //dictionary format
-    return this.selectAgentProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
+    return this.selectAllProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
       return {[ap.agent_pub_key]:ap.profile!.nickname}})))
   }
 

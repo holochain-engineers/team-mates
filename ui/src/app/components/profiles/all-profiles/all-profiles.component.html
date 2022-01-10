@@ -1,18 +1,35 @@
 
-    <section class="text-gray-600 body-font scroll-m-2 scroll-smooth bg-white shadow-lg sm:rounded-3xl rounded-lg sm:p-8 p-4 bg-clip-padding bg-opacity-60 border border-gray-200 backdrop-blur-sm">
-      <div class="text-lg">All Profiles</div>
-      <hr>
-        <ng-container *ngFor="let profile of (profiles$ | async);">
-            <div class="flex flex-row py-2 space-x-4">
-                <div class="border-b text-sm font-normal">
-                    <span class="w-8 h-8"><img [src]="profile.fields['avatar']"/></span>
-                    <div>
-                    <span>{{profile.nickname}}</span>
-                    </div>
-                    <div class="px-2">
-                    <span>28/12/2021</span>
-                    </div>
+    <section class="text-gray-600 body-font bg-white shadow-lg sm:rounded-3xl rounded-lg sm:p-8 p-4 bg-clip-padding bg-opacity-60 border border-gray-200 backdrop-blur-sm">
+        <div class="text-lg">All Profiles</div>
+        <hr>
+        <ng-container *ngIf="onenick; else listall">
+            <div class="flex flex-row py-2 space-x-4" (click)="hideprofile()">
+                <span class="md:pb-0 pb-8 md:px-0 px-20"><img [src]="oneavatar"/></span>
+                <div class="flex flex-col">
+                    <div class="text-gray-900 title-font font-semibold"><span>{{onenick}}</span></div>
+                    <ng-container *ngFor="let field of oneprofile">
+                        <div class="title-font font-semibold tracking-widest">{{field.key}}:
+                            <span class="text-sm text-gray-900">{{field.value}} </span>
+                        </div>
+                    </ng-container>
                 </div>
             </div>
         </ng-container>
+        <ng-template #listall>
+            <div class="xl:max-h-48 max-h-36 overflow-y-auto scroll-smooth">
+                <ng-container *ngFor="let profile of (profiles$ | async);">
+                    <div class="border-b text-sm font-normal rounded-lg hover:bg-gray-200">
+                        <div class="flex flex-row py-2 space-x-4" (click)="showprofile(profile)">
+                            <span class="w-8 h-8"><img [src]="profile.fields['avatar']"/></span>
+                            <div>
+                            <span>{{profile.nickname}}</span>
+                            </div>
+                            <div class="px-2">
+                            <span>28/12/2021</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-template>
     </section>

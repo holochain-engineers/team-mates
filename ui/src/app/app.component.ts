@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   template: `<component-container></component-container>`
 })
 export class AppComponent {
-  title = 'starter-ui';
+  title = 'team-mates';
 }

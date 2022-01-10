@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, map, filter, pipe } from 'rxjs';
 import { tap, withLatestFrom } from 'rxjs/operators';
 import { InvitationService } from '../services/invitation.service';
 import { InvitationEntryInfo } from '../models/invitation';
@@ -64,6 +64,11 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   selectInvitations(){
     return this.select(({ invitations }) => invitations);
   }
+
+  selectCompletedInvitations(){
+    return this.select((state) => state.invitations.filter(inv=>JSON.stringify(inv.invitation.invitees) === JSON.stringify(inv.invitees_who_accepted)));
+  }
+
 
 
   /* updaters */

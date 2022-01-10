@@ -1,17 +1,17 @@
 {
-  "name": "@holochain-engineers/starter-ui-dev",
+  "name": "@holochain-engineers/team-mates-dev",
   "private": true,
   "workspaces": [
     "ui",
     "tests"
   ],
   "scripts": {
-    "test": "npm run build:happ && npm t -w @holochain-engineers/starter-ui-tests",
-    "start": "npm run start -w @holochain-engineers/starter-ui",
+    "test": "npm run build:happ && npm t -w @holochain-engineers/team-mates-tests",
+    "start": "npm run start -w @holochain-engineers/team-mates",
+    "mock": "npm run mock -w @holochain-engineers/team-mates",
     "network": "npm run build:happ && concurrently-repeat \"npm run start:agent\"",
-    "start:mock": "npm run mock -w @holochain-engineers/starter-ui",
-    "start:build": "npm run build:happ && cross-env HC_PORT=$(port) concurrently -k \"npm run start:happ\"",
-    "start:happ": "rimraf .hc* && RUST_LOG=warn hc s generate workdir/happ/starter-ui.happ --run=8888 -a test-app network --bootstrap https://bootstrap-staging.holo.host/ quic",
+    "holochain": "npm run build:happ && cross-env HC_PORT=$(port) concurrently -k \"npm run start:happ\"",
+    "start:happ": "rimraf .hc* && RUST_LOG=warn hc s generate workdir/happ/team-mates.happ --run=8888 -a test-app network --bootstrap https://bootstrap-staging.holo.host/ quic",
     "build:happ": "npm run build:dna && hc app pack workdir/happ",
     "build:dna": "npm run build:zome && hc dna pack workdir/dna",
     "build:zome": "CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown"

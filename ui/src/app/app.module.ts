@@ -18,6 +18,7 @@ import { ContainerComponent } from './components/container.component';
 import { ProfileComponent } from './components/profiles/profile/profile.component'
 import { AllProfilesComponent } from './components/profiles/all-profiles/all-profiles.component'
 import { RegistrationComponent } from './components/profiles/registration/registration.component'
+import { TeamsComponent } from './components/invitation/teams/teams.component'
 
 export function initializeConnection(holochainService: HolochainService) {
   return (): Promise<any> => { 
@@ -36,7 +37,8 @@ export function initializeConnection(holochainService: HolochainService) {
     ProfileComponent,
     RegistrationComponent,
     EditInvitationComponent,
-    AllProfilesComponent  
+    AllProfilesComponent,
+    TeamsComponent  
   ],
   imports: [
     BrowserModule,
