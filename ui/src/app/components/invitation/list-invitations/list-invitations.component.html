@@ -23,7 +23,7 @@
           <td class="p-2">{{hashListToAgentList(inv.invitees_who_accepted)}}</td>
           <td class="p-2">{{hashListToAgentList(inv.invitees_who_rejected)}}</td>
           <td class="p-2">
-            <button title="Cancel" (click)="cancel(inv.invitation_header_hash)">
+            <button title="Cancel" (click)="cancel(inv.invitation_entry_hash)">
               <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>         
            </button></td>
         </tr>
@@ -54,9 +54,9 @@
             <td class="p-2">{{hashListToAgentList(inv.invitees_who_rejected)}}</td>
             <td class="p-2">
               <div class="flex flex-row">
-                <button class="mr-2" title="Accept" (click)="accept(inv.invitation_header_hash)">
+                <button class="mr-2" title="Accept" (click)="accept(inv.invitation_entry_hash)">
                   <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm-43.3 645.3-43.3 43.3-173.3-173.2 43.3-43.3 130 129.9 303.2-303.2 43.3 43.3-303.2 303.2z"/></svg>              </button>
-                <button title="Reject" (click)="reject(inv.invitation_header_hash)">
+                <button title="Reject" (click)="reject(inv.invitation_entry_hash)">
                   <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>         
                 </button>
               </div>

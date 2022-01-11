@@ -55,9 +55,9 @@ export class HolochainService implements OnDestroy{
         }
     }
 
-     call(cell:string, zome:string, fn_Name:string, payload:{}|null, timeout=15000): Promise<any>{
+     call(cell:string, zome:string, fn_Name:string, payload:any, timeout=15000): Promise<any>{
        const cellId = this.getCellId(cell)
-       if (!cellId) throw new Error("cell not found");
+       if (!cellId) throw new Error("cell not found:"+cell);
         return this.appWS.callZome(
           {
             cap: null as any,

@@ -6,9 +6,9 @@
     "tests"
   ],
   "scripts": {
+    "mock": "npm run mock -w @holochain-engineers/team-mates-ui",
     "test": "npm run build:happ && npm t -w @holochain-engineers/team-mates-tests",
-    "start": "npm run start -w @holochain-engineers/team-mates",
-    "mock": "npm run mock -w @holochain-engineers/team-mates",
+    "start": "npm run start -w @holochain-engineers/team-mates-ui",
     "network": "npm run build:happ && concurrently-repeat \"npm run start:agent\"",
     "holochain": "npm run build:happ && cross-env HC_PORT=$(port) concurrently -k \"npm run start:happ\"",
     "start:happ": "rimraf .hc* && RUST_LOG=warn hc s generate workdir/happ/team-mates.happ --run=8888 -a test-app network --bootstrap https://bootstrap-staging.holo.host/ quic",

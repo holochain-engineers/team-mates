@@ -31,7 +31,7 @@ export class TeamsComponent {
   }
 
   hashToAgent(hash:string):string{
-    console.log("profile_list:",this.profileDictionary)
+    console.debug("profile_list:",this.profileDictionary)
     return this.profileDictionary[hash]
   }
 

@@ -19,7 +19,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
 
   constructor(holochainService:HolochainService){//private readonly _invitationService: InvitationService) {
     super({invitations: []});
-    this._invitationService = new InvitationService(holochainService,"team-mates")
+    this._invitationService = new InvitationService(holochainService,"profile_invitation")
 
     this._subs.add(
       this._invitationService.invitationsReceived$.subscribe({
@@ -67,6 +67,10 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
 
   selectCompletedInvitations(){
     return this.select((state) => state.invitations.filter(inv=>JSON.stringify(inv.invitation.invitees) === JSON.stringify(inv.invitees_who_accepted)));
+  }
+
+  selectUncompletedInvitations(){
+    return this.select((state) => state.invitations.filter(inv=>JSON.stringify(inv.invitation.invitees) !== JSON.stringify(inv.invitees_who_accepted)));
   }
 
 

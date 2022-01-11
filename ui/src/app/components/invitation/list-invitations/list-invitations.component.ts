@@ -9,19 +9,17 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'list-invitations',
   templateUrl: './list-invitations.component.html',
-  styleUrls: ['./list-invitations.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InvitationListComponent implements OnDestroy{
-  public displayedColumns = ['inviter', 'invitees', 'timestamp', 'invitees_who_accepted', 'invitees_who_rejected', 'action' ];
   public outgoingInvitations$:Observable<InvitationEntryInfo[]>
   public incommingInvitations$:Observable<InvitationEntryInfo[]>
   private profileDictionarySubscription$!: Subscription
   private profileDictionary:Dictionary<string> = {}
   
   constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {
-    this.outgoingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
-    this.incommingInvitations$  = this._invitationStore.selectInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
+    this.outgoingInvitations$  = this._invitationStore.selectUncompletedInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
+    this.incommingInvitations$  = this._invitationStore.selectUncompletedInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
   }
 
 
@@ -34,20 +32,20 @@ export class InvitationListComponent implements OnDestroy{
     this.profileDictionarySubscription$.unsubscribe()
   }
 
-  accept(header_hash:string){
-    this._invitationStore.acceptInvitation(header_hash)
+  accept(entry_hash:string){
+    this._invitationStore.acceptInvitation(entry_hash)
   }
 
-  reject(header_hash:string){
-    this._invitationStore.rejectInvitation(header_hash)
+  reject(entry_hash:string){
+    this._invitationStore.rejectInvitation(entry_hash)
   }
 
-  cancel(header_hash:string){
-    this._invitationStore.clearInvitation(header_hash)
+  cancel(entry_hash:string){
+    this._invitationStore.clearInvitation(entry_hash)
   }
 
   hashToAgent(hash:string):string{
-    console.log("profile_list:",this.profileDictionary)
+    //console.log("profile_list:",this.profileDictionary)
     return this.profileDictionary[hash]
   }
 
@@ -59,8 +57,8 @@ export class InvitationListComponent implements OnDestroy{
     return res
   }
 
-  editInvitation(header_hash: string): void {
-    //this._invitationStore.editInvitation(header_hash);
+  editInvitation(entry_hash: string): void {
+    //this._invitationStore.editInvitation(entry_hash);
   }
 }
 

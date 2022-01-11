@@ -15,7 +15,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
   constructor(private readonly _profileService: ProfileService) {
     super({agentProfiles: []});
-    _profileService.subscribe_to_cell("team-mates")
+    _profileService.subscribe_to_cell("profile_invitation")
     this.mypubkey = _profileService.getMyAgentkey()!
   }
 

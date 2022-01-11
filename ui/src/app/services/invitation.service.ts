@@ -1,4 +1,4 @@
-import { AgentPubKeyB64, HeaderHashB64 } from '@holochain-open-dev/core-types';
+import { AgentPubKeyB64, EntryHashB64 } from '@holochain-open-dev/core-types';
 import { InvitationEntryInfo, mockInvitationEntryArray } from '../models/invitation';
 import { HolochainService } from './holochain.service';
 import { Subject } from 'rxjs';
@@ -32,21 +32,21 @@ export class InvitationService {
   }
 
   acceptInvitation(
-    invitation_header_hash: HeaderHashB64
+    invitation_entry_hash: EntryHashB64
   ): Promise<boolean> {
-    return this.callZome('accept_invitation', invitation_header_hash);
+    return this.callZome('accept_invitation', invitation_entry_hash);
   }
 
   rejectInvitation(
-    invitation_header_hash: HeaderHashB64
+    invitation_entry_hash: EntryHashB64
   ): Promise<boolean> {
-    return this.callZome('reject_invitation', invitation_header_hash);
+    return this.callZome('reject_invitation', invitation_entry_hash);
   }
 
   clearInvitation(
-    invitation_header_hash: HeaderHashB64
+    invitation_entry_hash: EntryHashB64
   ): Promise<boolean> {
-    return this.callZome('clear_invitation', invitation_header_hash);
+    return this.callZome('clear_invitation', invitation_entry_hash);
   }
 
   private callZome(fn_name: string, payload: any): Promise<any> {
