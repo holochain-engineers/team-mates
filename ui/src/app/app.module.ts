@@ -6,14 +6,13 @@ import { ClickOutsideDirective } from './helpers/clickout';
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-//import { AppMaterialModule } from "./helpers/material.module";
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { InvitationComponent } from './components/invitation/invitation.component';
 import { InvitationListComponent } from './components/invitation/list-invitations/list-invitations.component';
 import { CreateInvitationComponent } from './components/invitation/create-invitation/create-invitation.component';
-import { EditInvitationComponent } from './components/invitation/edit-invitation/edit-invitation.component';
+//import { EditInvitationComponent } from './components/invitation/edit-invitation/edit-invitation.component';
 import { ContainerComponent } from './components/container.component';
 import { ProfileComponent } from './components/profiles/profile/profile.component'
 import { AllProfilesComponent } from './components/profiles/all-profiles/all-profiles.component'
@@ -36,7 +35,7 @@ export function initializeConnection(holochainService: HolochainService) {
     ContainerComponent,
     ProfileComponent,
     RegistrationComponent,
-    EditInvitationComponent,
+    //EditInvitationComponent,
     AllProfilesComponent,
     TeamsComponent  
   ],
@@ -46,7 +45,6 @@ export function initializeConnection(holochainService: HolochainService) {
     FormsModule,
     ReactiveFormsModule,
     NgSelectModule,
-   // AppMaterialModule,
     ImageCropperModule
   ],
   providers: [ HolochainService,

@@ -6,7 +6,7 @@ import { InvitationStore } from '../../store/invitation.store';
   templateUrl: './invitation.component.html'
 })
 export class InvitationComponent implements OnInit {
-  selectedInvitation$ = this._invitationStore.selectInvitation("123");
+ // selectedInvitation$ = this._invitationStore.selectInvitation("123");
   
 
   constructor(

@@ -35,7 +35,7 @@ npm test
 ## Starting the UI in mock mode
 
 ```bash
-npm run start:mock
+npm run mock
 ```
 
 ## Starting the UI to connect to holochain
@@ -47,8 +47,10 @@ npm start
 ## Starting a Holochain network
 
 ```bash
-npm run start:build
-npm run start:happ
+npm run holochain
+```
+or
+```bash
 npm run network 2
 ```
 

@@ -11,6 +11,3 @@
     <list-invitations></list-invitations>
   </div>
 </div>
-<ng-container *ngIf="(selectedInvitation$ | async); let editInvite">
-  <edit-invitation [invitation]="$any(editInvite)"></edit-invitation>
-</ng-container>

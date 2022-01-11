@@ -5,6 +5,7 @@
 /ui/node_modules/
 /ui/dist/
 /ui/.angular
+/ui/a_temp_files/
 .ng-script.sh
 
 
