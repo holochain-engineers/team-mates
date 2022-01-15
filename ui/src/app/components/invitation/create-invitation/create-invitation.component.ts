@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { InvitationEntryInfo } from 'src/app/models/invitation';
 import { KeyNick } from 'src/app/models/profile';
 import { ProfileStore } from 'src/app/store/profile.store';
@@ -15,7 +15,7 @@ export class CreateInvitationComponent {
   public selectedPeople: KeyNick[] = [] //= [{}]//[{ agent_pub_key: "1234", nickname: 'Karyn Wright' }];
 
   constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {
-    this.people$ = this._profileStore.selectKeyNickArray()
+    this.people$ = this._profileStore.selectKeyNickArray().pipe(map(kna=>kna.filter(kn=>kn.agent_pub_key !== this._profileStore.mypubkey)))
   }
 
   send() {
