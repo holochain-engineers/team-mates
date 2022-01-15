@@ -1,7 +1,5 @@
 
-//import { AppInfoResponse, CellId } from '@holochain/conductor-api';
 import { Base64 } from 'js-base64';
-//import { Timestamp } from '@holochain-open-dev/core-types';
 export type Timestamp = [number, number];
 
 export interface Hashed<T> {
@@ -15,19 +13,6 @@ export function deserializeHash(hash: string): Uint8Array {
 export function serializeHash(hash: Uint8Array): string {
   return `u${Base64.fromUint8Array(hash, true)}`;
 }
-
-/*export function getCellIdForDnaHash(
-  appInfo: AppInfoResponse,
-  dnaHash: string
-): CellId {
-  const cell = appInfo.cell_data.find(
-    cellData => serializeHash(cellData[0][0]) === dnaHash
-  );
-
-  if (!cell) throw new Error(`Could not find cell for dna ${dnaHash}`);
-
-  return cell[0];
-}*/
 
 export function millisToTimestamp(millis: number): Timestamp {
   const secs = Math.floor(millis / 1000);

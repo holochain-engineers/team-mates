@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
       console.log("profile:",this.profile)
       for (const [key, value] of Object.entries(this.profile.fields)) {
         if (key == "avatar")
-          this.avatar = value
+          this.croppedImage = value
         else
           this.fields.push({key,value})
       }

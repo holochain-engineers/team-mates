@@ -140,13 +140,13 @@ checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
 name = "hc_zome_invitations"
 version = "0.0.1"
 dependencies = [
- "hc_zome_invitations 0.0.1 (git+https://github.com/holochain-engineers/invitations?rev=176c63b4f44890e52d72ae4db348026c7fd6de13)",
+ "hc_zome_invitations 0.0.1 (git+https://github.com/holochain-engineers/invitations)",
 ]
 
 [[package]]
 name = "hc_zome_invitations"
 version = "0.0.1"
-source = "git+https://github.com/holochain-engineers/invitations?rev=176c63b4f44890e52d72ae4db348026c7fd6de13#176c63b4f44890e52d72ae4db348026c7fd6de13"
+source = "git+https://github.com/holochain-engineers/invitations#176c63b4f44890e52d72ae4db348026c7fd6de13"
 dependencies = [
  "chrono",
  "derive_more",
@@ -158,7 +158,7 @@ dependencies = [
 [[package]]
 name = "hc_zome_profiles"
 version = "0.0.1"
-source = "git+https://github.com/holochain-open-dev/profiles?rev=ba60ad2b796684999df2d7b1d09bf9506979e9af#ba60ad2b796684999df2d7b1d09bf9506979e9af"
+source = "git+https://github.com/holochain-engineers/profiles#60ac7c0428868ac8b7e6daaf535290d0f1c15d04"
 dependencies = [
  "derive_more",
  "hdk 0.0.116",

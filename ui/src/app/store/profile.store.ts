@@ -91,6 +91,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
   }
 
   async setMyProfile(myprofile:Profile) {
+    console.log("create profile:",myprofile)
       const agentprofile = await this._profileService.createProfile(myprofile)
       console.log("created profile:",agentprofile)
       this.updateProfile(agentprofile) // this should do an upsert

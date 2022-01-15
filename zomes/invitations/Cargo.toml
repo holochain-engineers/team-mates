@@ -9,4 +9,4 @@ crate-type = ["cdylib", "rlib"]
 name = "hc_zome_invitations"
 
 [dependencies]
-hc_zome_invitations = {git = "https://github.com/holochain-engineers/invitations", rev = "176c63b4f44890e52d72ae4db348026c7fd6de13"}
+hc_zome_invitations = {git = "https://github.com/holochain-engineers/invitations", package = "hc_zome_invitations"}

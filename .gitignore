@@ -6,7 +6,9 @@
 /ui/dist/
 /ui/.angular
 /ui/a_temp_files/
+/ui/*.zip
 .ng-script.sh
+/temp_files/
 
 
 # holochain

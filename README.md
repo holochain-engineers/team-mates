@@ -1,4 +1,4 @@
-# team-mates
+# team-mates (uses holochain 0.0.119)
 happ using invites and profiles zomes to get you started on holochain development
 
 the UI architecture shown below should be elegant, modular and relatively easy to understand and extend  

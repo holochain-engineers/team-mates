@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { environment } from '@environment';
-import { AppSignalCb, AppSignal, AppWebsocket, CellId, InstalledCell } from '@holochain/conductor-api'
+import { AppSignalCb, AppSignal, AppWebsocket, CellId, InstalledCell } from '@holochain/client'
 import { Dictionary, serializeHash } from "../helpers/utils";
 
 
@@ -60,7 +60,7 @@ export class HolochainService implements OnDestroy{
        if (!cellId) throw new Error("cell not found:"+cell);
         return this.appWS.callZome(
           {
-            cap: null as any,
+            cap_secret: null,
             cell_id: cellId,
             zome_name: zome,
             fn_name: fn_Name,
