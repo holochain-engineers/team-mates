@@ -26,6 +26,11 @@ From the root folder of the repo:
 npm install
 ```
 
+then to avoid the workspace bug: 
+```bash
+cd ui
+npm install
+```
 ## Testing
 
 ```bash
