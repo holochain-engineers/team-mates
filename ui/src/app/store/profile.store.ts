@@ -76,11 +76,12 @@ export class ProfileStore extends ComponentStore<ProfileState> {
     //in the future we might not want to load all the profiles.. and use the search facility instead
     const profiles = await this._profileService.getAllProfiles()
     this.loadProfiles(profiles)
-    const agentprofile = await this._profileService.getMyProfile()
-    if (agentprofile) {
-      console.log("agentkey in load",this.mypubkey)
-      this.updateProfile(agentprofile)
-    }
+    console.log("all profiles:",profiles)
+    //const agentprofile = await this._profileService.getMyProfile()
+    //if (agentprofile) {
+     // console.log("agentkey in load",this.mypubkey)
+     // this.updateProfile(agentprofile)
+    //}
   }
 
   getMyProfile(){
@@ -91,6 +92,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
   async setMyProfile(myprofile:Profile) {
       const agentprofile = await this._profileService.createProfile(myprofile)
+      console.log("created profile:",agentprofile)
       this.updateProfile(agentprofile) // this should do an upsert
   }
 

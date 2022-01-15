@@ -47,7 +47,7 @@ export class ProfileComponent implements OnInit {
   }
 
   add(){
-    const handle:string = this.profileform.get("handle")?.value;
+   // const handle:string = this.profileform.get("handle")?.value;
     if (this.profileform.invalid) {
       this.errorMessage = "invalid form"
       return;
@@ -57,7 +57,7 @@ export class ProfileComponent implements OnInit {
     this.profile.fields[key] = value
     try{
       this._profileStore.setMyProfile(this.profile) 
-      console.log("profile data added")
+      console.log("profile data added",this.profile)
       this.fields.push({key,value})
       this.profileform.reset({ field_key: '', field_value: '' })
     }catch(error){
