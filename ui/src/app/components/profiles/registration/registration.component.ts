@@ -28,7 +28,7 @@ export class RegistrationComponent implements OnInit {
     }
     const profile:Profile = {nickname:handle, fields:{}}
       try{
-        this._profileStore.setMyProfile(profile) 
+        this._profileStore.createMyProfile(profile) 
         console.log("user registered")
       }catch(error){
         this.errorMessage = JSON.stringify(error)

@@ -59,7 +59,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
     agentProfiles: [...state.agentProfiles, agentprofile],
   }));
 
-  readonly updateProfile = this.updater((state, agentprofile: AgentProfile) => ({
+  readonly setProfile = this.updater((state, agentprofile: AgentProfile) => ({
     agentProfiles: [ ...state.agentProfiles.filter((entry)=>{
         return entry.agent_pub_key !== agentprofile.agent_pub_key //? undefined : entry
       }), agentprofile]
@@ -72,29 +72,33 @@ export class ProfileStore extends ComponentStore<ProfileState> {
   }));
 
 
-  async loadProfileEntries():Promise<void> {
-    //in the future we might not want to load all the profiles.. and use the search facility instead
-    const profiles = await this._profileService.getAllProfiles()
-    this.loadProfiles(profiles)
-    console.log("all profiles:",profiles)
-    //const agentprofile = await this._profileService.getMyProfile()
-    //if (agentprofile) {
-     // console.log("agentkey in load",this.mypubkey)
-     // this.updateProfile(agentprofile)
-    //}
-  }
-
   getMyProfile(){
     console.log("agentkey",this.mypubkey)
     return this.selectAgentProfile(this.mypubkey).pipe( 
       pluck('profile'))
   }
 
-  async setMyProfile(myprofile:Profile) {
+  //TODO below functions should be effects because they write to the store following a network call
+
+  async loadProfileEntries():Promise<void> {
+    //in the future we might not want to load all the profiles.. and use the search facility instead
+    const profiles = await this._profileService.getAllProfiles()
+    this.loadProfiles(profiles)
+    console.log("all profiles:",profiles)
+  }
+
+  async createMyProfile(myprofile:Profile) {
     console.log("create profile:",myprofile)
       const agentprofile = await this._profileService.createProfile(myprofile)
       console.log("created profile:",agentprofile)
-      this.updateProfile(agentprofile) // this should do an upsert
+      this.setProfile(agentprofile)
+  }
+
+  async updateMyProfile(newprofile:Profile) {
+    console.log("update profile:",newprofile)
+    const agentprofile = await this._profileService.updateProfile(newprofile)
+    console.log("updated profile:",agentprofile)
+    this.setProfile(agentprofile) 
   }
 
 }

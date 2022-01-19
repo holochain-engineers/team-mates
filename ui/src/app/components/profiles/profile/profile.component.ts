@@ -41,7 +41,7 @@ export class ProfileComponent implements OnInit {
   remove(key:string){ 
     const keyvalue = {key:key,value:this.profile.fields[key]}
     delete this.profile.fields[key]
-    this._profileStore.setMyProfile(this.profile) 
+    this._profileStore.updateMyProfile(this.profile) 
     console.log("profile data removed for key",key)
     this.fields.splice(this.fields.indexOf(keyvalue))
   }
@@ -56,7 +56,7 @@ export class ProfileComponent implements OnInit {
     const value = this.profileform.get('field_value')?.value
     this.profile.fields[key] = value
     try{
-      this._profileStore.setMyProfile(this.profile) 
+      this._profileStore.updateMyProfile(this.profile) 
       console.log("profile data added",this.profile)
       this.fields.push({key,value})
       this.profileform.reset({ field_key: '', field_value: '' })
@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
     console.log("image data",this.croppedImage)
     this.imageChangedEvent = ''
     this.profile.fields['avatar'] = this.croppedImage
-    this._profileStore.setMyProfile(this.profile)
+    this._profileStore.createMyProfile(this.profile)
   } 
 
 }

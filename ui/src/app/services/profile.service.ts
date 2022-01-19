@@ -66,6 +66,12 @@ export class ProfileService {
     return this.callZome('create_profile', newprofile);
   }
 
+  updateProfile(newprofile: Profile): Promise<AgentProfile> {
+    if (environment.mock)
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),2000)})
+    return this.callZome('update_profile', newprofile);
+  }
+
   private callZome(fn_name: string, payload: any) {
     return this._holochainService.call(this._cellName, this._zomeName, fn_name, payload);
   }
