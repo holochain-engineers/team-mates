@@ -1,13 +1,14 @@
 [package]
-name = "profiles"
-version = "0.0.1"
-authors = [ "guillem_cordoba" ]
+authors = ["eric@harris-braun.com"]
 edition = "2018"
+name = "profiles"
+version = "0.0.1-alpha1"
 
 [lib]
+crate-type = ["cdylib", "rlib"]
 name = "profiles"
-crate-type = [ "cdylib", "rlib" ]
 
 [dependencies]
-hc_zome_profiles = {git = "https://github.com/holochain-engineers/profiles", package = "hc_zome_profiles"}
+hc_zome_profiles = {git = "https://github.com/holochain-open-dev/profiles", tag = "for-hc-v0.0.122", package = "hc_zome_profiles"}
+
 hdk = "0.0.118"
