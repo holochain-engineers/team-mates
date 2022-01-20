@@ -1,6 +1,6 @@
-<div class="bg-web3-hc bg-cover overflow-y-visible">
+<div class="bg-web3-hc bg-cover">
   <ng-container *ngIf="(myprofile$ | async); else noprofile; let profile">
-    <div class="container px-5 py-24 mx-auto">
+    <div class="px-5 py-24 mx-auto z-2">
       <div class="flex flex-wrap">
         <div class="p-4 md:w-1/2" aria-label="profile-block">
           <app-profile [profile]="profile"></app-profile>
@@ -13,6 +13,6 @@
     </div>
   </ng-container>
   <ng-template #noprofile>
-    <registration></registration>
+    <registration></registration> 
   </ng-template>
 </div>
