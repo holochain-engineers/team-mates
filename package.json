@@ -20,7 +20,7 @@
     "build:dna": "npm run build:zome && hc dna pack workdir/dna",
     "build:zome": "CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown",
     "clean": "npx --quiet rimraf package-lock.json node_modules && npx --quiet rimraf ui/package-lock.json ui/node_modules && npx --quiet rimraf tests/node_modules",
-    "clean:rust": "npx rimraf target && npx rimraf .cargo && npx rimraf cargo.lock"
+    "clean:rust": "npx rimraf target && npx rimraf .cargo && npx rimraf Cargo.lock"
   },
   "devDependencies": {
     "bestzip": "^2.2.0",
