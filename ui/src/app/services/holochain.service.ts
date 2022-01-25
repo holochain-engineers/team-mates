@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import { environment } from '@environment';
 import { AppSignalCb, AppSignal, AppWebsocket, CellId, InstalledCell } from '@holochain/client'
-import { Dictionary, serializeHash } from "../helpers/utils";
+import { serializeHash } from "../helpers/utils";
 
 
 export enum ConnectionState{
@@ -39,6 +39,7 @@ export class HolochainService implements OnDestroy{
   }
 
     async init(){ //called by the appModule at startup
+        sessionStorage.clear()
         if (!environment.mock){
           try{
             console.log("Connecting to holochain")
@@ -46,9 +47,11 @@ export class HolochainService implements OnDestroy{
             const appInfo = await this.appWS.appInfo({ installed_app_id: environment.APP_ID});
             this.cellData = appInfo.cell_data;
             console.log("Connected to holochain",appInfo.cell_data)
+            sessionStorage.setItem("status","HOLOCHAIN")
           }catch(error){
-              console.error("Holochain connection failed:")
-              throw(error)
+              sessionStorage.setItem("status","mock")
+              console.error(error)
+              //throw(error)
           }
         } else {
           console.log("you are in Mock mode.. no connections made!")
@@ -71,9 +74,8 @@ export class HolochainService implements OnDestroy{
         );
       }
 
-    /* in the future zome_name should be a property of AppSignal*/
+    /* in the future 'zome_name' and 'cell_name' should be meta-data of AppSignal and Not part of the payload*/
     signalHandler(signal: AppSignal): void {
-     // console.log("what is this?: ",signal)
       if(this.signalCallbacks.length > 0){
         for (const cb of this.signalCallbacks) {
           console.log("cb data: ",cb)
@@ -92,8 +94,11 @@ export class HolochainService implements OnDestroy{
     }
 
 
-    getConnectionState(){
-      return ConnectionState[this.appWS.client.socket.readyState]
+    getConnectionState():string{
+      if (this.appWS)
+        return ConnectionState[this.appWS.client.socket.readyState]
+      else
+        return ConnectionState[1]
     }
 
     ngOnDestroy(){

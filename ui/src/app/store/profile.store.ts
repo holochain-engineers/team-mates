@@ -1,4 +1,3 @@
-import { keyframes } from '@angular/animations';
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { pluck, map} from 'rxjs/operators';
@@ -9,7 +8,7 @@ export interface ProfileState {
   agentProfiles: AgentProfile[];
 }
 
-@Injectable()
+@Injectable() //Store is a provider instance for the Container component hierarchy
 export class ProfileStore extends ComponentStore<ProfileState> {
   mypubkey!: string
 
@@ -78,27 +77,31 @@ export class ProfileStore extends ComponentStore<ProfileState> {
       pluck('profile'))
   }
 
+  getNetStatus():string {
+    return this._profileService.getNetworkStatus()
+  }
+
   //TODO below functions should be effects because they write to the store following a network call
 
   async loadProfileEntries():Promise<void> {
     //in the future we might not want to load all the profiles.. and use the search facility instead
     const profiles = await this._profileService.getAllProfiles()
     this.loadProfiles(profiles)
-    console.log("all profiles:",profiles)
+    console.debug("all profiles:",profiles)
   }
 
   async createMyProfile(myprofile:Profile) {
-    console.log("create profile:",myprofile)
-      const agentprofile = await this._profileService.createProfile(myprofile)
-      console.log("created profile:",agentprofile)
-      this.setProfile(agentprofile)
+    console.debug("create profile:",myprofile)
+    const agentprofile = await this._profileService.createProfile(myprofile)
+    this.setProfile(agentprofile)
+    console.log("created profile:",agentprofile)
   }
 
   async updateMyProfile(newprofile:Profile) {
-    console.log("update profile:",newprofile)
+    console.debug("update profile:",newprofile)
     const agentprofile = await this._profileService.updateProfile(newprofile)
-    console.log("updated profile:",agentprofile)
-    this.setProfile(agentprofile) 
+    this.setProfile(agentprofile)
+    console.log("updated profile:",agentprofile) 
   }
 
 }

@@ -5,27 +5,29 @@ import { tap, withLatestFrom } from 'rxjs/operators';
 import { InvitationService } from '../services/invitation.service';
 import { InvitationEntryInfo } from '../models/invitation';
 import { HolochainService } from '../services/holochain.service';
+import { environment } from '@environment';
 
 
 export interface InvitationState {
   invitations: InvitationEntryInfo[];
 }
-
 //TODO : make the ComponentStore composition based so we can dynamically create new stores for cell clones
-@Injectable()  
+
+@Injectable()  //Store is a provider instance for the Container component hierarchy
 export class InvitationStore extends ComponentStore<InvitationState> implements OnDestroy {
   private _subs = new Subscription();
   private _invitationService: InvitationService
+  private _cell = environment.cell1
 
   constructor(holochainService:HolochainService){//private readonly _invitationService: InvitationService) {
     super({invitations: []});
-    this._invitationService = new InvitationService(holochainService,"profile_invitation")
+    this._invitationService = new InvitationService(holochainService, this._cell) //we create a zome service instance for each cell 
 
     this._subs.add(
       this._invitationService.invitationsReceived$.subscribe({
         next: (invitationEntryInfo) => {
           console.log('Invitation received:',invitationEntryInfo);
-          this.upsertInvitations(invitationEntryInfo!);
+          this.setInvitations(invitationEntryInfo!);
         },
         error: (error) => {
           console.error('An error happened while updating Invitation:', error);
@@ -35,7 +37,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     this._subs.add(
       this._invitationService.invitationsAccepted$.subscribe({
         next: (invitationEntryInfo) => {
-          this.upsertInvitations(invitationEntryInfo!);
+          this.setInvitations(invitationEntryInfo!);
         },
         error: (error) => {
           console.error('An error happened while updating Invitation:', error);
@@ -46,7 +48,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
       this._invitationService.invitationsRejected$.subscribe({
         next: (invitationEntryInfo) => {
           ///this.setEditedInvitation(invitationEntryInfo!)
-          this.upsertInvitations(invitationEntryInfo!);
+          this.setInvitations(invitationEntryInfo!);
           //this.clearEditedInvitation();
         },
         error: (error) => {
@@ -94,25 +96,22 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
 
 
     // effects (handles and serializes signals from the holochain network)
-  readonly upsertInvitations = this.effect((invite$: Observable<InvitationEntryInfo>) =>
+  readonly setInvitations = this.effect((invite$: Observable<InvitationEntryInfo>) =>
     invite$.pipe(
       withLatestFrom(this.selectInvitations()),
       tap<[InvitationEntryInfo, InvitationEntryInfo[]]>(([invite, invitations]) => {
         const id = invite.invitation_entry_hash;
         const index = invitations.findIndex((cur) => {
-          console.log('compare', cur, id, cur.invitation_entry_hash === id);
+          //console.log('compare', cur, id, cur.invitation_entry_hash === id);
           return cur.invitation_entry_hash === id;
         });
-
-        console.log('index', index, invite, invitations);
-
         if (index > -1) {
           const modifiedInvitations = [...invitations];
           modifiedInvitations[index] = invite;
 
           this.loadInvitations(modifiedInvitations);
         } else {
-          console.log("adding invite:",invite)
+          console.debug("adding invite:",invite)
           this.updateInvitation(invite)
         }
       })
@@ -126,7 +125,7 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   /* call zome functions */
 
   sendNewInvitation(agentPubKeyB64_arr: string[]){
-    console.log("new invite:",agentPubKeyB64_arr)
+    console.debug("new invite:",agentPubKeyB64_arr)
     this._invitationService.sendInvitation(agentPubKeyB64_arr)
   }
 
@@ -142,9 +141,14 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
     this._invitationService.clearInvitation(header_hash)
   }
 
+  //TODO this should be an Effect 
   async loadInvitationEntries():Promise<void> {
     const invitations = await this._invitationService.getMyPendingInvitations()
-    console.log("invitations:",invitations)
+    console.debug("invitations:",invitations)
     this.loadInvitations(invitations)
+  }
+
+  getNetStatus():string {
+    return this._invitationService.getNetworkStatus()
   }
 }

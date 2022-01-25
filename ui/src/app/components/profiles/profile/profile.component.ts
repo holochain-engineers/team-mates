@@ -26,10 +26,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     if (!this.profile){
-      this.errorMessage = "profile is missing"
+      this.errorMessage = "Error: profile is missing"
     }
     else{
-      console.log("profile:",this.profile)
       for (const [key, value] of Object.entries(this.profile.fields)) {
         if (key == "avatar")
           this.croppedImage = value
@@ -42,22 +41,20 @@ export class ProfileComponent implements OnInit {
     const keyvalue = {key:key,value:this.profile.fields[key]}
     delete this.profile.fields[key]
     this._profileStore.updateMyProfile(this.profile) 
-    console.log("profile data removed for key",key)
     this.fields.splice(this.fields.indexOf(keyvalue))
   }
 
   add(){
-   // const handle:string = this.profileform.get("handle")?.value;
     if (this.profileform.invalid) {
-      this.errorMessage = "invalid form"
+      this.errorMessage = "Error: invalid form"
       return;
     }
+    this.errorMessage = ""
     const key = this.profileform.get('field_key')?.value
     const value = this.profileform.get('field_value')?.value
     this.profile.fields[key] = value
     try{
       this._profileStore.updateMyProfile(this.profile) 
-      console.log("profile data added",this.profile)
       this.fields.push({key,value})
       this.profileform.reset({ field_key: '', field_value: '' })
     }catch(error){
@@ -67,27 +64,23 @@ export class ProfileComponent implements OnInit {
 
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
-    console.log("file change event",event)
+    //console.log("file change event",event)
   }
   imageCropped(event: ImageCroppedEvent) {
       this.croppedImage = event.base64;
-      console.log("cropped",event)
   }
   imageLoaded(image: LoadedImage) {
-    console.log("loaded",image)
       // show cropper
   }
   cropperReady() {
-    console.log("ready")
       // cropper ready
   }
   loadImageFailed() {
-    console.log("loadimage failed")
-      // show message
+    this.errorMessage = "Error: image load failed"
   }
 
   cropfinished(){
-    console.log("image data",this.croppedImage)
+    console.debug("image data",this.croppedImage)
     this.imageChangedEvent = ''
     this.profile.fields['avatar'] = this.croppedImage
     this._profileStore.createMyProfile(this.profile)

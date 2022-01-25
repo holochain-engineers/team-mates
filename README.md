@@ -1,16 +1,24 @@
 # team-mates
 happ using invites and profiles zomes to get you started on holochain development
 
-the UI architecture shown below should be elegant, modular and relatively easy to understand and extend  
+## Design
 
+The UI architecture shown below should be modular and relatively easy to understand and extend.  
+Each Zome has a zome service which exposes its full API and listens for network signals.
+The Zome services are instanciated by the RX stores which cache data for a specific cell and zome.
+The Container component holds a provider instance for each RX store, available to its sub-components 
 
+This simple design works for a statically known number of cells which are pre-defined in the build properties
+It also assumes that the signals contain meta-data pertaining to the cell and zome name and signal payloads are 
+structured as {name:string, data:any}
 <p align="center">
     <img src="architecture_multiplex.png" width="750">
 </p>
 
 
+## Installaton
 
-## nix-shell setup
+### nix-shell setup
 
 At first, run from the root folder of this repository to enter the nix-shell:
 
@@ -31,16 +39,10 @@ then to avoid the workspace bug:
 cd ui
 npm install
 ```
-## Testing
+### Testing
 
 ```bash
 npm test
-```
-
-## Starting the UI in mock mode
-
-```bash
-npm run mock
 ```
 
 ## Starting the UI to connect to holochain

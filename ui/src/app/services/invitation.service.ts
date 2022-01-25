@@ -7,10 +7,10 @@ import { environment } from '@environment';
 
 //@Injectable()
 export class InvitationService {
-  invitationsReceived$ = new Subject<InvitationEntryInfo>()  //new
-  invitationsAccepted$ = new Subject<InvitationEntryInfo>(); //modified
-  invitationsRejected$ = new Subject<InvitationEntryInfo>(); //modified
-  private _cellName = ''
+  public invitationsReceived$ = new Subject<InvitationEntryInfo>()  //new
+  public invitationsAccepted$ = new Subject<InvitationEntryInfo>(); //modified
+  public invitationsRejected$ = new Subject<InvitationEntryInfo>(); //modified
+  private _cellName
   private _zomeName = 'invitations'
   
   constructor(private _holochainService: HolochainService, cellname:string) {
@@ -19,13 +19,13 @@ export class InvitationService {
   }
 
   sendInvitation(input: AgentPubKeyB64[] | undefined): Promise<any>{
-    if (environment.mock)
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
       return new Promise<any>((resolve)=>resolve)
     return this.callZome('send_invitation', input);
   }
 
   getMyPendingInvitations(): Promise<InvitationEntryInfo[]> {
-    if (environment.mock)
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
       return new Promise<InvitationEntryInfo[]>((resolve) => {setTimeout(()=> resolve(mockInvitationEntryArray),3000)})
     else
       return this.callZome('get_my_pending_invitations', null);
@@ -49,10 +49,13 @@ export class InvitationService {
     return this.callZome('clear_invitation', invitation_entry_hash);
   }
 
+  getNetworkStatus():string {
+    return this._holochainService.getConnectionState()
+  }
+
   private callZome(fn_name: string, payload: any): Promise<any> {
     return this._holochainService.call(this._cellName, this._zomeName, fn_name, payload);
   }
-
 
   private signalHandler(payload: any) {
     //console.log("handler called",payload)

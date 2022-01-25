@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   mock: false,
   HOST_URL: 'ws://127.0.0.1:8888',
-  APP_ID:'team-mates'
+  APP_ID:'team-mates',
+  cell1:'profile_invitation'
 };
 
 /*

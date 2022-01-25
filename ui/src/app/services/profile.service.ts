@@ -18,7 +18,7 @@ export class ProfileService {
   }
 
   getMyAgentkey(){
-    if (environment.mock){ 
+    if (environment.mock || sessionStorage.getItem("status") == "mock"){ 
       this._agent_pub_key = mockMyAgentProfile.agent_pub_key
       return mockMyAgentProfile.agent_pub_key
     }
@@ -27,7 +27,7 @@ export class ProfileService {
   }
 
   getMyProfile(): Promise<AgentProfile | undefined>{
-    if (environment.mock)
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
       return new Promise<AgentProfile | undefined>((resolve) => {
         setTimeout(()=> {
           const response: AgentProfile = {agent_pub_key:mockMyAgentProfile.agent_pub_key,profile:mockMyAgentProfile.profile}
@@ -37,45 +37,50 @@ export class ProfileService {
   }
 
   getAgentProfile(agentPubKey: AgentPubKeyB64): Promise<AgentProfile> {
-    if (environment.mock)
-      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve(mock1AgentProfile),2000)})
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve(mock1AgentProfile),1000)})
     return this.callZome('get_agent_profile', agentPubKey);
   }
 
   getAgentsProfiles(agentPubKeys: AgentPubKeyB64[]): Promise<AgentProfile[]> {
-    if (environment.mock)
-      return new Promise<AgentProfile[]>((resolve) => {setTimeout(()=> resolve(mockAgentProfiles),2000)})
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
+      return new Promise<AgentProfile[]>((resolve) => {setTimeout(()=> resolve(mockAgentProfiles),1000)})
     return this.callZome('get_agents_profile', agentPubKeys);
   }
 
   searchProfiles(nicknamePrefix: string): Promise<AgentProfile[]> {
-    if (environment.mock)
-      return new Promise<AgentProfile[]>((resolve) => {setTimeout(()=> resolve(mockAgentProfiles),2000)})
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
+      return new Promise<AgentProfile[]>((resolve) => {setTimeout(()=> resolve(mockAgentProfiles),1000)})
     return this.callZome('search_profiles', {nickname_prefix: nicknamePrefix});
   }
 
   getAllProfiles(): Promise<AgentProfile[]> {
-    if (environment.mock)
-      return new Promise<AgentProfile[]>((resolve) => {setTimeout(()=> resolve([...mockAgentProfiles]),2000)})
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
+      return new Promise<AgentProfile[]>((resolve) => {setTimeout(()=> resolve([...mockAgentProfiles]),1000)})
     return this.callZome('get_all_profiles', null);
   }
 
   createProfile(newprofile: Profile): Promise<AgentProfile> {
-    if (environment.mock)
-      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),2000)})
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),1000)})
     return this.callZome('create_profile', newprofile);
   }
 
   updateProfile(newprofile: Profile): Promise<AgentProfile> {
-    if (environment.mock)
-      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),2000)})
+    if (environment.mock || sessionStorage.getItem("status") == "mock")
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),1000)})
     return this.callZome('update_profile', newprofile);
+  }
+
+  getNetworkStatus():string {
+    return this._holochainService.getConnectionState()
   }
 
   private callZome(fn_name: string, payload: any) {
     return this._holochainService.call(this._cellName, this._zomeName, fn_name, payload);
   }
 
+  //profiles does not currently have any signals
   private signalHandler(payload: any) {}
   
 }

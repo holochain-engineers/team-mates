@@ -1,4 +1,5 @@
 <div class="bg-web3-hc bg-cover">
+  <div class="{{statusStyling}} align-text-top text-right pr-5">{{status}}</div>
   <ng-container *ngIf="(myprofile$ | async); else noprofile; let profile">
     <div class="px-5 py-24 mx-auto z-2">
       <div class="flex flex-wrap">

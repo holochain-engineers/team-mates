@@ -1,4 +1,4 @@
-import { Component, Input} from "@angular/core";
+import { Component} from "@angular/core";
 import { Observable } from "rxjs";
 import { KeyValue, Profile } from "../../../models/profile"
 import { map } from 'rxjs/operators';
@@ -29,7 +29,6 @@ export class AllProfilesComponent {
       else
         this.oneprofile.push({key,value})
     }
-    console.log(this.oneprofile)
   }
 
   hideprofile(){
