@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
+import { environment } from '@environment';
 import { ComponentStore } from '@ngrx/component-store';
 import { pluck, map} from 'rxjs/operators';
 import { AgentProfile, KeyNick, Profile } from '../models/profile';
@@ -10,12 +11,15 @@ export interface ProfileState {
 
 @Injectable() //Store is a provider instance for the Container component hierarchy
 export class ProfileStore extends ComponentStore<ProfileState> {
-  mypubkey!: string
+  public readonly mypubkey!: string
+  private readonly _profileService: ProfileService
+  private _cell = environment.cell1
 
-  constructor(private readonly _profileService: ProfileService) {
+  constructor(private injector:Injector){
     super({agentProfiles: []});
-    _profileService.subscribe_to_cell("profile_invitation")
-    this.mypubkey = _profileService.getMyAgentkey()!
+    this._profileService = new ProfileService(injector, this._cell)
+    //_profileService.subscribe_to_cell("profile_invitation")
+    this.mypubkey = this._profileService.getMyAgentkey()!
   }
 
    /* selectors */

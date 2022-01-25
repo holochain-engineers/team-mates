@@ -1,20 +1,20 @@
 import { HolochainService } from './holochain.service';
-import { Injectable } from '@angular/core';
+import { Injector } from '@angular/core';
 import { environment } from '@environment';
 import { AgentProfile, Profile, mockMyAgentProfile, mock1AgentProfile, mockAgentProfiles } from '../models/profile';
 import { AgentPubKeyB64 } from '@holochain-open-dev/core-types';
 
-@Injectable({providedIn: 'root'})
+//multiple instance per cell
 export class ProfileService {
-  private _cellName = ''
-  private _zomeName = 'profiles'
+  private _cellName:string
+  private _zomeName:string = 'profiles'
+  private _holochainService:HolochainService
   private _agent_pub_key?: string //= "DEFAULT_KEY"
 
-  constructor(private _holochainService:HolochainService) { }
-
-  subscribe_to_cell(cell:string){
-    this._cellName = cell
-    this._holochainService.registerCallback(cell, this._zomeName, (s)=>this.signalHandler(s))
+  constructor(private injector:Injector, cellname:string) {
+    this._cellName = cellname
+    this._holochainService = this.injector.get(HolochainService)
+    this._holochainService.registerCallback(cellname, this._zomeName, (s)=>this.signalHandler(s))
   }
 
   getMyAgentkey(){
@@ -83,4 +83,9 @@ export class ProfileService {
   //profiles does not currently have any signals
   private signalHandler(payload: any) {}
   
+
+    //subscribe_to_cell(cell:string){
+  //  this._cellName = cell
+   // this._holochainService.registerCallback(cell, this._zomeName, (s)=>this.signalHandler(s))
+  //}
 }

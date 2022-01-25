@@ -93,7 +93,7 @@ export class HolochainService implements OnDestroy{
       this.signalCallbacks.push({cell_name:cell_name,zome_name:zome_name,cb_fn:handler})
     }
 
-
+    //TODO add event listener and relay state change back to UI
     getConnectionState():string{
       if (this.appWS)
         return ConnectionState[this.appWS.client.socket.readyState]

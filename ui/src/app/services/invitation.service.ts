@@ -2,19 +2,21 @@ import { AgentPubKeyB64, EntryHashB64 } from '@holochain-open-dev/core-types';
 import { InvitationEntryInfo, mockInvitationEntryArray } from '../models/invitation';
 import { HolochainService } from './holochain.service';
 import { Subject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injector} from "@angular/core";
 import { environment } from '@environment';
 
-//@Injectable()
+//multiple instance per cell
 export class InvitationService {
+  private _cellName:string
+  private _zomeName:string = 'invitations'
+  private _holochainService:HolochainService
   public invitationsReceived$ = new Subject<InvitationEntryInfo>()  //new
   public invitationsAccepted$ = new Subject<InvitationEntryInfo>(); //modified
   public invitationsRejected$ = new Subject<InvitationEntryInfo>(); //modified
-  private _cellName
-  private _zomeName = 'invitations'
-  
-  constructor(private _holochainService: HolochainService, cellname:string) {
+ 
+  constructor(private injector:Injector, cellname:string) {
     this._cellName = cellname
+    this._holochainService = this.injector.get(HolochainService)
     this._holochainService.registerCallback(cellname, this._zomeName, (s)=>this.signalHandler(s))
   }
 

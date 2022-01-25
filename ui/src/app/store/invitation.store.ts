@@ -1,12 +1,10 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, Injector } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import { Observable, Subscription, map, filter, pipe } from 'rxjs';
 import { tap, withLatestFrom } from 'rxjs/operators';
 import { InvitationService } from '../services/invitation.service';
 import { InvitationEntryInfo } from '../models/invitation';
-import { HolochainService } from '../services/holochain.service';
 import { environment } from '@environment';
-
 
 export interface InvitationState {
   invitations: InvitationEntryInfo[];
@@ -19,9 +17,9 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   private _invitationService: InvitationService
   private _cell = environment.cell1
 
-  constructor(holochainService:HolochainService){//private readonly _invitationService: InvitationService) {
+  constructor(private injector:Injector){//private readonly _invitationService: InvitationService) {
     super({invitations: []});
-    this._invitationService = new InvitationService(holochainService, this._cell) //we create a zome service instance for each cell 
+    this._invitationService = new InvitationService(injector, this._cell) //we create a zome service instance for each cell+zome
 
     this._subs.add(
       this._invitationService.invitationsReceived$.subscribe({
