@@ -1,4 +1,4 @@
-# team-mates
+# Team-Mates
 happ using invites and profiles zomes to get you started on holochain development
 
 ## Design
@@ -18,8 +18,6 @@ structured as {name:string, data:any}
 
 ## Installaton
 
-### nix-shell setup
-
 At first, run from the root folder of this repository to enter the nix-shell:
 
 ```bash
@@ -38,11 +36,7 @@ then to avoid the workspace bug:
 ```bash
 cd ui
 npm install
-```
-### Testing
-
-```bash
-npm test
+cd ..
 ```
 
 ## Starting the UI to connect to holochain
@@ -62,6 +56,12 @@ npm run network 2
 ```
 
 You can replace "2" by the number of agents that you want to boot up
+
+## Testing (dependent on zome developers)
+
+```bash
+npm test
+```
 
 
 
