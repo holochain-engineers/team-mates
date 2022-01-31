@@ -6,6 +6,7 @@
     "tests"
   ],
   "scripts": {
+    "install":"cd ui && npm install && cd ..",
     "start": "npm run start -w team-mates-ui",
     "test": "npm run build:happ && npm t -w team-mates-tests",
     "holochain": "npm run build:happ && npm run start:agent",
