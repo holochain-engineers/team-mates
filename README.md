@@ -32,13 +32,7 @@ From the root folder of the repo:
 npm install
 ```
 
-## Starting the UI to connect to holochain
-
-```bash
-npm start
-```
-
-## Starting a Holochain network
+## Starting the Holochain network  
 
 ```bash
 npm run holochain
@@ -49,6 +43,12 @@ npm run network 2
 ```
 
 You can replace "2" by the number of agents that you want to boot up
+
+## Starting the UI to connect to holochain (in a new nix-shell terminal tab)
+
+```bash
+npm start
+```
 
 ## Testing (dependent on zome developers)
 
