@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
     console.debug("image data",this.croppedImage)
     this.imageChangedEvent = ''
     this.profile.fields['avatar'] = this.croppedImage
-    this._profileStore.createMyProfile(this.profile)
+    this._profileStore.updateMyProfile(this.profile)
   } 
 
 }

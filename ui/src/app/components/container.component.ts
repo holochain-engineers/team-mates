@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { InvitationStore } from '../store/invitation.store';
 import { ProfileStore } from '../store/profile.store';
 
@@ -11,6 +12,7 @@ export class ContainerComponent implements OnInit {
   myprofile$ = this._profileStore.getMyProfile()
   status:string | null = ""
   statusStyling:string = "text-green-500"
+  sub?:Subscription
 
   constructor(
     private readonly _invitationStore: InvitationStore,

@@ -10,4 +10,4 @@ name = "hc_zome_invitations"
 
 [dependencies]
 hc_zome_invitations = {git = "https://github.com/holochain-engineers/invitations", package = "hc_zome_invitations"}
-hdk = "0.0.118"
+hdk = "0.0.120"

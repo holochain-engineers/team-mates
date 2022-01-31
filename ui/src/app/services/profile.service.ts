@@ -19,8 +19,8 @@ export class ProfileService {
 
   getMyAgentkey(){
     if (environment.mock || sessionStorage.getItem("status") == "mock"){ 
-      this._agent_pub_key = mockMyAgentProfile.agent_pub_key
-      return mockMyAgentProfile.agent_pub_key
+      this._agent_pub_key = mockMyAgentProfile.agentPubKey
+      return mockMyAgentProfile.agentPubKey
     }
     this._agent_pub_key = this._holochainService.get_pub_key_from_cell(this._cellName)
     return this._agent_pub_key
@@ -30,7 +30,7 @@ export class ProfileService {
     if (environment.mock || sessionStorage.getItem("status") == "mock")
       return new Promise<AgentProfile | undefined>((resolve) => {
         setTimeout(()=> {
-          const response: AgentProfile = {agent_pub_key:mockMyAgentProfile.agent_pub_key,profile:mockMyAgentProfile.profile}
+          const response: AgentProfile = {agentPubKey:mockMyAgentProfile.agentPubKey,profile:mockMyAgentProfile.profile}
           resolve(response)},500)
       })
     return this.callZome('get_my_profile', null);
@@ -62,13 +62,13 @@ export class ProfileService {
 
   createProfile(newprofile: Profile): Promise<AgentProfile> {
     if (environment.mock || sessionStorage.getItem("status") == "mock")
-      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),1000)})
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agentPubKey:this._agent_pub_key!,profile:newprofile}),1000)})
     return this.callZome('create_profile', newprofile);
   }
 
   updateProfile(newprofile: Profile): Promise<AgentProfile> {
     if (environment.mock || sessionStorage.getItem("status") == "mock")
-      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agent_pub_key:this._agent_pub_key!,profile:newprofile}),1000)})
+      return new Promise<AgentProfile>((resolve) => {setTimeout(()=> resolve({agentPubKey:this._agent_pub_key!,profile:newprofile}),1000)})
     return this.callZome('update_profile', newprofile);
   }
 

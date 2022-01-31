@@ -17,7 +17,7 @@ export class AllProfilesComponent {
 
   constructor(private _profileStore: ProfileStore){
     this.profiles$  = this._profileStore.selectAllProfiles()
-      .pipe(map(plist=>plist.filter(pro=>pro.agent_pub_key !== this._profileStore.mypubkey)
+      .pipe(map(plist=>plist.filter(pro=>pro.agentPubKey !== this._profileStore.mypubkey)
       .map(plist=> {return plist.profile!})));
   }
 

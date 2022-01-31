@@ -25,11 +25,11 @@ export class ProfileStore extends ComponentStore<ProfileState> {
    /* selectors */
 
   selectAgentProfile(hash: string){
-    return this.select((state) => state.agentProfiles.find(i => i.agent_pub_key === hash)!);
+    return this.select((state) => state.agentProfiles.find(i => i.agentPubKey === hash)!);
   }
   
   selectAgentProfiles(hasharr: string[]){
-    return this.select((state) => state.agentProfiles.filter(ap=>{hasharr.includes(ap.agent_pub_key)})) 
+    return this.select((state) => state.agentProfiles.filter(ap=>{hasharr.includes(ap.agentPubKey)})) 
   }
 
   selectAllProfiles(){
@@ -44,13 +44,13 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
   selectKeyNickArray()  {
    return this.selectAllProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
-      return {agent_pub_key:ap.agent_pub_key, nickname:ap.profile?.nickname} as KeyNick
+      return {agent_pub_key:ap.agentPubKey, nickname:ap.profile?.nickname} as KeyNick
     })))
   }
 
   selectKeyNickIndexes() { //dictionary format
     return this.selectAllProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
-      return {[ap.agent_pub_key]:ap.profile!.nickname}})))
+      return {[ap.agentPubKey]:ap.profile!.nickname}})))
   }
 
   /* updaters */
@@ -64,7 +64,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
 
   readonly setProfile = this.updater((state, agentprofile: AgentProfile) => ({
     agentProfiles: [ ...state.agentProfiles.filter((entry)=>{
-        return entry.agent_pub_key !== agentprofile.agent_pub_key //? undefined : entry
+        return entry.agentPubKey !== agentprofile.agentPubKey //? undefined : entry
       }), agentprofile]
   }));
 

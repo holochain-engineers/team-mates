@@ -2,12 +2,12 @@ import { Dictionary } from "../helpers/utils";
 import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev/core-types';
 
 export interface Profile {
-  nickname: string;
   fields: Dictionary<string>;
+  nickname: string;
 }
 
 export interface AgentProfile {
-  agent_pub_key: AgentPubKeyB64;
+  agentPubKey: AgentPubKeyB64;
   profile: Profile | undefined;
 }
 
@@ -26,24 +26,24 @@ const default_avatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICA
 
 export const mockMyProfile:Profile = {nickname: "thomas",fields:{["avatar"]:""}}
 
-export const mockMyAgentProfile:AgentProfile = {agent_pub_key: "12C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs", profile: mockMyProfile};
+export const mockMyAgentProfile:AgentProfile = {agentPubKey: "12C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs", profile: mockMyProfile};
 
 
 export const mock1Profile:Profile = {nickname: "friend1",fields:{["avatar"]:default_avatar,["age"]:"21",["nationality"]:"afgan"}}
 
-export const mock1AgentProfile:AgentProfile = {agent_pub_key: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-ds", profile: mock1Profile};
+export const mock1AgentProfile:AgentProfile = {agentPubKey: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-ds", profile: mock1Profile};
 
 export const mock2Profile:Profile = {nickname: "friend2",fields:{["avatar"]:default_avatar}}
 
-export const mock2AgentProfile:AgentProfile = {agent_pub_key: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-es", profile: mock2Profile};
+export const mock2AgentProfile:AgentProfile = {agentPubKey: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-es", profile: mock2Profile};
 
 export const mock3Profile:Profile = {nickname: "friend3",fields:{["avatar"]:default_avatar}}
 
-export const mock3AgentProfile:AgentProfile = {agent_pub_key: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-fs", profile: mock3Profile};
+export const mock3AgentProfile:AgentProfile = {agentPubKey: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-fs", profile: mock3Profile};
 
 export const mock4Profile:Profile = {nickname: "friend4",fields:{["avatar"]:default_avatar}}
 
-export const mock4AgentProfile:AgentProfile = {agent_pub_key: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-gs", profile: mock4Profile};
+export const mock4AgentProfile:AgentProfile = {agentPubKey: "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-gs", profile: mock4Profile};
 
 export const mockAgentProfiles:AgentProfile[] = [mock1AgentProfile,mock2AgentProfile,mock3AgentProfile,mock4AgentProfile];
 
