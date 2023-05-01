@@ -1,0 +1,15 @@
+[package]
+authors = ["manuel.r.puentes.d@gmail.com"]
+
+name = "invitation_integrity"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "invitation_integrity"
+
+[dependencies]
+hc_zome_invitation_integrity = {git = "https://github.com/holochain-engineers/invitations", package = "hc_zome_invitation_integrity"}
+hdi = { workspace = true }
+serde = { workspace = true }

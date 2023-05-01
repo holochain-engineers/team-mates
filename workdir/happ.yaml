@@ -1,0 +1,17 @@
+---
+manifest_version: "1"
+name: team-mates
+description: "An app to demo invitations and profiles zomes"
+roles:
+  - id: profile_invitation
+    provisioning:
+      strategy: create
+      deferred: false
+    dna:
+      bundled: "../dnas/team-mates/workdir/team-mates.dna"
+      modifiers:
+        network_seed: ~
+        properties: ~
+        origin_time: ~
+      version: ~
+      clone_limit: 0

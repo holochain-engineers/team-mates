@@ -1,12 +1,27 @@
-[workspace]
-resolver = "2"
-members = [
-  "zomes/invitations",
-  "zomes/profiles"
-]
 
 [profile.dev]
 opt-level = "z"
 
 [profile.release]
 opt-level = "z"
+
+[workspace]
+resolver ="2"
+members = ["dnas/*/zomes/coordinator/*", "dnas/*/zomes/integrity/*"]
+
+[workspace.dependencies]
+hdi = "=0.2"
+hdk = "=0.1"
+serde = "1"
+
+[workspace.dependencies.invitation]
+path = "dnas/invitations/zomes/coordinator/invitation"
+
+[workspace.dependencies.invitation_integrity]
+path = "dnas/invitations/zomes/integrity/invitation"
+
+[workspace.dependencies.profiles]
+path = "dnas/gather/zomes/coordinator/profiles"
+
+[workspace.dependencies.profiles_integrity]
+path = "dnas/gather/zomes/integrity/profiles"
