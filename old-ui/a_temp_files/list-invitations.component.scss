@@ -1,0 +1,62 @@
+.mat-table
+{
+  background-color:transparent!important;  
+}
+
+table tr:last-child td /*To remove the last border*/
+{
+  border-bottom:0 solid
+}
+
+.container {
+  max-height: 95vh;
+  overflow: auto;
+}
+
+.invites-pending-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 2em;
+}
+
+.mat-header-cell {
+  color: indigo;
+  background-color:whitesmoke;
+}
+
+.mat-column-inviter {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-column-invitees {
+  border-right: 1px solid currentColor;
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-column-timestamp {
+  width: 32px;
+  border-right: 1px solid currentColor;
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-column-invitees_who_accepted {
+  border-right: 1px solid currentColor;
+  padding: 12px;
+  text-align: center;
+}
+
+.mat-column-invitees_who_rejected {
+  padding: 12px;
+  border-right: 1px solid currentColor;
+  text-align: center;
+}
+
+.mat-column-action {
+  padding: 12px;
+  text-align: center;
+}

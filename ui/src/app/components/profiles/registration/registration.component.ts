@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Profile } from '../../../models/profile';
-import { ProfileStore } from '../../../store/profile.store';
+import { ProfileStore } from '../../../stores/profile.store';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'registration',
+  standalone: true,
+  imports:[ReactiveFormsModule,FormsModule,CommonModule],
   templateUrl: './registration.component.html',
 })
 export class RegistrationComponent implements OnInit {

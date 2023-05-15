@@ -1,12 +1,20 @@
-import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { bootstrapApplication } from '@angular/platform-browser';
+//import { appConfig } from './app/app.config';
+import { AppComponent } from './app/app.component';
+import { HolochainService } from './app/services/holochain.service';
+import { APP_INITIALIZER } from '@angular/core';
 
-import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
-
-if (environment.production) {
-  enableProdMode();
+export function initializeConnection(holochainService: HolochainService) {
+  return (): Promise<any> => { 
+    return holochainService.init();
+  }
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+export const appConfig = {
+  providers: [
+    { provide: APP_INITIALIZER, useFactory: initializeConnection, deps: [HolochainService], multi: true}
+  ]
+};
+
+bootstrapApplication(AppComponent, appConfig)
+  .catch((err) => console.error(err));

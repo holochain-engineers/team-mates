@@ -1,10 +1,14 @@
   
-import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev/core-types';
+import { AgentPubKey, ActionHash, EntryHash } from '@holochain/client'
 
-
+  export interface SignalPayload {
+    name: string,
+    data: any
+  }
+  
   export interface Invitation {
-    inviter: AgentPubKeyB64;
-    invitees: AgentPubKeyB64[];
+    inviter: AgentPubKey;
+    invitees: AgentPubKey[];
     timestamp: any;
   }
 
@@ -16,16 +20,16 @@ import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev
   
   export interface InvitationEntryInfo {
     invitation: Invitation;
-    invitation_entry_hash: EntryHashB64;
-    invitation_header_hash: HeaderHashB64;
-    invitees_who_accepted: AgentPubKeyB64[];
-    invitees_who_rejected: AgentPubKeyB64[];
+    invitation_entry_hash: EntryHash;
+    invitation_action_hash: ActionHash;
+    invitees_who_accepted: AgentPubKey[];
+    invitees_who_rejected: AgentPubKey[];
   }
 
   export interface ProfiledInvitationEntry {
     invitation: ProfiledInvitation;
-    invitation_entry_hash: EntryHashB64;
-    invitation_header_hash: HeaderHashB64;
+    invitation_entry_hash: EntryHash;
+    invitation_header_hash: ActionHash;
     invitees_who_accepted: string[];
     invitees_who_rejected: string[];
   }
@@ -37,30 +41,30 @@ import { AgentPubKeyB64, HeaderHashB64, EntryHashB64 } from '@holochain-open-dev
   }
 
   export const mockInvitation:Invitation = {
-    inviter:"12C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs",
-    invitees:["13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-ds","13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-es"],
+    inviter:new Uint8Array(12),
+    invitees:[new Uint8Array(13),new Uint8Array(13),new Uint8Array(14)],
     timestamp:"1234425567"
   }
 
   export const mockInvitationEntry:InvitationEntryInfo = {
     invitation: mockInvitation,
-    invitation_entry_hash:"uhC0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs",
-    invitation_header_hash:"hhC0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs",
+    invitation_entry_hash: new Uint8Array(10),
+    invitation_action_hash: new Uint8Array(10),
     invitees_who_accepted:[],
     invitees_who_rejected: []
   }
 
   export const mockInvitation2:Invitation = {
-    inviter:"13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-ds",
-    invitees:["12C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs","13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-es", "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-fs"],
+    inviter:new Uint8Array(12),
+    invitees:[new Uint8Array(13),new Uint8Array(13),new Uint8Array(14)],
     timestamp:"1234425567"
   }
 
   export const mockInvitationEntry2:InvitationEntryInfo = {
     invitation: mockInvitation2,
-    invitation_entry_hash:"uhC0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs",
-    invitation_header_hash:"hhC0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs",
-    invitees_who_accepted:["12C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-vs","13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-es", "13C0kP3Cu8QRxERdKJZIqlI3y_gQuJke5qFp7Ae52L49N-fs"],
+    invitation_entry_hash: new Uint8Array(10),
+    invitation_action_hash: new Uint8Array(10),
+    invitees_who_accepted:[new Uint8Array(12),new Uint8Array(12), new Uint8Array(12)],
     invitees_who_rejected: []
   }
 

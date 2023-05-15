@@ -1,0 +1,19 @@
+---
+manifest_version: "1"
+name: team-mates
+integrity:
+  network_seed: ~
+  properties: ~
+  origin_time: 1669136217555883
+  zomes:
+    - name: profiles
+      hash: ~
+      bundled: "../../target/wasm32-unknown-unknown/release/profiles.wasm"
+      dependencies: ~
+    - name: invitations
+      hash: ~
+      bundled: "../../target/wasm32-unknown-unknown/release/invitations.wasm"
+      dependencies: ~
+  coordinator:
+    zomes: []
+  

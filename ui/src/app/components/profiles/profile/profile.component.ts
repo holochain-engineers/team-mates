@@ -1,11 +1,17 @@
 import { Component, OnInit, Input} from "@angular/core";
 import { KeyValue, Profile } from "../../../models/profile"
-import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper'
-import { ProfileStore } from '../../../store/profile.store';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ImageCroppedEvent, ImageCropperModule, LoadedImage } from "ngx-image-cropper"
+import { ProfileStore } from '../../../stores/profile.store';
+import { FormBuilder, Validators, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+//import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
 
 @Component({
   selector: "app-profile",
+  standalone: true,
+  imports:[ImageCropperModule,ReactiveFormsModule, CommonModule],
   templateUrl: "./profile.component.html",
 })
 export class ProfileComponent implements OnInit {

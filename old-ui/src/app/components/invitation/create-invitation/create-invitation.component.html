@@ -1,0 +1,27 @@
+<!--Using items input-->
+
+<section class="text-gray-600 sm:rounded-3xl rounded-lg sm:p-8 p-4 body-font bg-white shadow-lg  bg-clip-padding bg-opacity-60 border border-gray-200 backdrop-blur-sm">
+    <div class="relative flex flex-col" >
+      <div class="text-lg">Create invitation</div><hr><br>
+      <ng-select
+          [items]="people$ | async"
+          [multiple]="true"
+          [closeOnSelect]="false"
+          [searchable]="false"
+          bindLabel="nickname"
+          placeholder="Select"
+          [(ngModel)]="selectedPeople">
+      </ng-select>
+      <div class="flex flex-row mt-3">
+        <ng-container *ngIf="selectedPeople.length > 0">
+          <button title="Send" (click)="send()">
+            <svg class="fill-white hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="m10 920 980-420L10 80v326.7L710 500 10 593.3V920z"/></svg>
+          </button>
+          <button title="Cancel" class="mx-2" (click)="clear()">
+            <svg class="fill-gray-400 hover:fill-black w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>
+          </button>
+        </ng-container>
+      </div>
+    </div>
+</section>
+

@@ -9,6 +9,7 @@
 /ui/*.zip
 .ng-script.sh
 /temp_files/
+/old_ui/
 
 
 # holochain

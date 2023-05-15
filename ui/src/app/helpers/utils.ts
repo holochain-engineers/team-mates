@@ -1,4 +1,5 @@
 
+import { CellId, DnaModifiers, Duration } from '@holochain/client';
 import { Base64 } from 'js-base64';
 export type Timestamp = [number, number];
 
@@ -29,3 +30,20 @@ export function now(): Timestamp {
 }
 
 export type Dictionary<T> = { [key: string]: T };
+
+//agentpubkey, dnahash
+export const fakeCellId:CellId = [new Uint8Array(10), new Uint8Array(10)]
+
+export const fakeDuration:Duration = {
+  secs: 123,
+  nanos: 32
+}
+
+export const fakeDNAModifiers:DnaModifiers =  {
+  network_seed: "NetworkSeed",
+  properties: "DnaProperties",
+  origin_time: 123,
+  quantum_time: fakeDuration
+};
+
+

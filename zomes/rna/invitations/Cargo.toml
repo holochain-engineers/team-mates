@@ -1,0 +1,14 @@
+[package]
+name = "invitations"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "invitations"
+
+[dependencies]
+hc_zome_invitations_rna = {git = "https://github.com/holochain-engineers/invitations", branch = "main"}
+hdk = { workspace = true }
+serde = { workspace = true }
+invitations_dna = { workspace = true }

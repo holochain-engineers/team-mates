@@ -1,0 +1,106 @@
+
+    <section class="text-gray-600 body-font bg-white shadow-lg sm:rounded-3xl rounded-lg sm:p-8 p-4 bg-clip-padding bg-opacity-60 border border-gray-200 backdrop-blur-sm">
+      <div class="text-lg">My Profile <span class="text-red-500 px-2">{{errorMessage}}</span></div>
+      <hr><br>
+      <div class="relative flex flex-col md:flex-row"> 
+        <div class="w-full md:w-1/3 px-2 space-y-2 grid place-items-center">
+          <label class="cursor-pointer">
+            <ng-container *ngIf="croppedImage; else default">
+              <img [src]="croppedImage" class="rounded-full"/>
+            </ng-container>
+            <ng-template #default>
+              <div class="flex-shrink">
+                <img class="md:pb-0 pb-8 md:px-0 px-20" src="./assets/blank_avatar-gray.png" alt="image"/>
+              </div>
+            </ng-template>
+            <input type="file" name="myfile" style="display:none" (change)="fileChangeEvent($event)">
+          </label>
+        </div>                    
+        <ng-container *ngIf="imageChangedEvent">                                                      
+          <div>
+            <image-cropper
+              [imageChangedEvent]="imageChangedEvent"
+              format="png"
+              [roundCropper]=true
+              [resizeToHeight]=200
+              (imageCropped)="imageCropped($event)"
+              (imageLoaded)="imageLoaded($event)"
+              (cropperReady)="cropperReady()"
+              (loadImageFailed)="loadImageFailed()"
+            ></image-cropper>
+            <button class="w-full rounded-md h-10 bg-gray-600 text-white hover:bg-blue-300 border" (click)="cropfinished()" >OK</button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!imageChangedEvent">
+          <div class="w-full md:w-2/3 flex flex-col space-y-2 px-2">
+            <div class="title-font font-semibold tracking-widest">USERNAME: 
+              <span class="text-sm text-gray-900">{{profile.nickname}}</span>
+            </div>
+            <ng-container *ngFor="let field of fields;">
+              <div class="flex flex-row">
+                <div class="title-font font-semibold tracking-widest">{{field.key}}:
+                  <span class="text-sm text-gray-900">{{field.value}} </span>
+                </div>
+                <button title="Delete" class="px-2 py-0.5 ml-2" (click)="remove(field.key)">
+                  <svg class="fill-gray-300 hover:fill-black w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M500 10C229.4 10 10 229.4 10 500s219.4 490 490 490 490-219.4 490-490S770.6 10 500 10zm265.1 663.7c25.2 25.2 25.2 66.2 0 91.4-25.2 25.2-66.2 25.2-91.4 0L500 591.4 326.3 765.1c-25.2 25.2-66.2 25.2-91.4 0-25.2-25.2-25.2-66.2 0-91.4L408.6 500 234.9 326.3c-25.2-25.2-25.2-66.2 0-91.4 25.2-25.2 66.2-25.2 91.4 0L500 408.6l173.7-173.7c25.2-25.2 66.2-25.2 91.4 0 25.2 25.2 25.2 66.2 0 91.4L591.4 500l173.7 173.7z"/></svg>
+                </button>
+              </div>
+            </ng-container>
+            <form class="font-sans text-sm space-y-2 text-center" [formGroup]="profileform" (ngSubmit)="add()">
+              <div class="flex text-gray-900">
+                <div class="flex-grow pr-2">
+                  <input  placeholder="Name" formControlName="field_key" class=" placeholder-gray-400 w-full sm:px-4 px-2 py-1.5 sm:text-base text-xs transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-400 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400">
+                </div>
+                <div class="flex-grow pr-2">
+                  <input placeholder="Value" formControlName="field_value" class="placeholder-gray-400 w-full sm:px-4 px-2 py-1.5 sm:text-base text-xs transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 focus:bg-white dark:focus:bg-gray-400 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400">
+                </div>
+                <div class="flex-shrink">
+                  <button title="Save" class="bg-indigo-200 border-0 w-full px-2 py-1.5 focus:outline-none hover:bg-indigo-600 rounded-lg sm:text-base text-xs">
+                    <svg class="sm:w-6 sm:h-6 w-4 h-4" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" xml:space="preserve"><path d="M663.3 336.7V119.8H119.8v216.9h543.5zM500 880.3c44.2 0 82.5-16.2 114.8-48.5s48.5-70.6 48.5-114.8-16.1-82.5-48.5-114.8-70.7-48.5-114.8-48.5-82.4 16.2-114.8 48.5c-32.4 32.3-48.5 70.6-48.5 114.8s16.2 82.5 48.5 114.8 70.6 48.5 114.8 48.5zM773.1 10 990 226.9v653.3c0 28.9-11.1 54.4-33.2 76.5s-47.6 33.2-76.5 33.2H119.8c-30.6 0-56.6-11.1-77.9-33.2-21.3-22-31.9-47.5-31.9-76.4V119.7c0-28.9 10.6-54.4 31.9-76.5C63.2 21.1 89.1 10 119.8 10h653.3z"/></svg>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </ng-container>
+      </div>
+
+    </section>
+
+  <!--
+     Name: <input  placeholder="Name" [(ngModel)]="newData"> Value: <input [(ngModel)]="newData"> 
+<div class="flex flex-col">
+  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+        
+        <div class="text-gray-100 py-2">Profile</div>
+        <ng-container *ngIf="profile">
+            <table class="divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Avatar
+                  </th>
+                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    username
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200" >
+                <tr>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">avatar</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="text-sm text-gray-900">{{profile.nickname}}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+-->

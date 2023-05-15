@@ -1,11 +1,4 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
-body{
-    margin: 0px;
-    font-family: 'Raleway', sans-serif;
-    background-color: black;
-  }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
