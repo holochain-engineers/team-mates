@@ -1,1 +1,0 @@
-    "start:happ": "rimraf .hc* && RUST_LOG=warn hc s generate workdir/happ/team-mates.happ --run=8888 -a test-app network --bootstrap https://bootstrap-staging.holo.host/ quic",
