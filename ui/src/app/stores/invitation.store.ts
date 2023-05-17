@@ -66,11 +66,13 @@ export class InvitationStore extends ComponentStore<InvitationState> implements 
   }
 
   selectCompletedInvitations(){
-    return this.select((state) => state.invitations.filter(inv=>JSON.stringify(inv.invitation.invitees) === JSON.stringify(inv.invitees_who_accepted)));
+    return this.select((state) => state.invitations.filter(inv=>
+      JSON.stringify(inv.invitation.invitees.join()) === JSON.stringify(inv.invitees_who_accepted.join())));
   }
 
   selectUncompletedInvitations(){
-    return this.select((state) => state.invitations.filter(inv=>JSON.stringify(inv.invitation.invitees) !== JSON.stringify(inv.invitees_who_accepted)));
+    return this.select((state) => state.invitations.filter(inv=>
+      JSON.stringify(inv.invitation.invitees.join()) !== JSON.stringify(inv.invitees_who_accepted.join())));
   }
 
 

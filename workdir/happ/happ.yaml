@@ -1,6 +1,6 @@
 ---
 manifest_version: "1"
-name: team-mates-app
+name: team-mates
 description: "An app to demo invitations and profiles zomes"
 roles:
   - name: connection
@@ -8,7 +8,7 @@ roles:
       strategy: create
       deferred: false
     dna:
-      bundled: "../dna/team-mates.dna"
+      bundled: "../dna/team.dna"
       modifiers:
         network_seed: ~
         properties: ~

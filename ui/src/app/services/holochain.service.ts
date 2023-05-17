@@ -49,7 +49,7 @@ export class HolochainService implements OnDestroy{
   //here we determine what receptor API's to use 
   get_receptors_for_cell(cell_name:string):string[]{
     switch (cell_name) {
-      case "team-mates": return ['profiles','invitations']
+      case "team": return ['profiles','invitations']
       default: return []
     }
   }

@@ -38,9 +38,12 @@ export class ProfileStore extends ComponentStore<ProfileState> {
     return this.select((state) => state.agentProfiles.find(i => i.agentPubKey64 === pubkey)!);
   }
   
-  //selectAgentProfiles(pubkey_arr: string[]){
-  //  return this.select((state) => state.agentProfiles.filter(ap=>{pubkey_arr.includes(ap.agentPubKey64)})) 
- // }
+  selectAgentKeyNicksDictionary(pubkey_arr: AgentPubKey[]){
+    const pubkey_arrB64 = pubkey_arr.map(key=>encodeHashToBase64(key))
+    return this.select((state) => state.agentProfiles.filter(ap=>{pubkey_arrB64.includes(ap.agentPubKey64)})
+    .map(ap=>{ return {[ap.agentPubKey64]:ap.keyNick}})) 
+  }
+
 
   selectAllAgentProfiles(){
     return this.select(({ agentProfiles }) => agentProfiles);
@@ -65,9 +68,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
     ));
   }
 
-
-
-  selectKeyNickArray()  {
+  /*selectKeyNickArray()  {
    return this.selectAllAgentProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap => {
       return {agent_pub_key:ap.agentPubKey64, nickname:ap.profile?.nickname} as KeyNick
     })))
@@ -76,7 +77,7 @@ export class ProfileStore extends ComponentStore<ProfileState> {
   selectKeyNickIndexes() { //dictionary format
     return this.selectAllAgentProfiles().pipe(map((agentprofiles: AgentProfile[]) => agentprofiles.map(ap=> {
       return {[ap.agentPubKey.join()]:ap.profile!.nickname}})))
-  }
+  }*/
 
   /* updaters */
   

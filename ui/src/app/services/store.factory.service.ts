@@ -13,6 +13,10 @@ import { InvitationStore } from '../stores/invitation.store';
 import { InvitationReceptor } from '../receptors/invitation.receptor';
 //import { ProfilesClient, ProfilesStore } from '@holochain-open-dev/profiles';
 
+
+//TODO: change this into an abstract class.. with a private constructor and static functions
+// and rename to Receptor service
+
 // we assume a unique human readable key for the cell dictionary - roleName:cellName
 // rolename is the behaviour of the cell in the tissue and cellname is the instance 
 function invitationStoreFactory(hcs: HolochainService){

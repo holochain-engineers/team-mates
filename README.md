@@ -12,7 +12,7 @@ This simple design works for a statically known number of cells which are pre-de
 It also assumes that the signals contain meta-data pertaining to the cell and zome name and signal payloads are 
 structured as {name:string, data:any}
 <p align="center">
-    <img src="architecture_multiplex.png" width="750">
+    <img src="front-end-redux-holochain-architecture.png" width="750">
 </p>
 
 

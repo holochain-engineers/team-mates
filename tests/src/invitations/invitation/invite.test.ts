@@ -95,7 +95,7 @@ test('2. create and accept Invite', async () => {
     const invite_detail: InvitationEntryInfo = await sendInvitations(alice.cells[0],[bob.agentPubKey]);
     assert.ok(invite_detail);
 
-    await pause(1200);
+    await pause(2200);
     const bob_signal = await signalReceived_bob
     
     console.log("Bob sees he has been signalled a new Invite:\n",bob_signal.payload['data'])
@@ -106,7 +106,7 @@ test('2. create and accept Invite', async () => {
     console.log(result)
     assert.isTrue(result)
 
-    await pause(1200);
+    await pause(2200);
     let alice_signal = await signalReceived_alice
 
     assert.equal(alice_signal.payload['type'],'InvitationAccepted',"message should be of type accepted")

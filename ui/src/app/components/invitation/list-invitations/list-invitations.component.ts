@@ -22,13 +22,15 @@ export class InvitationListComponent implements OnDestroy{
   private profileDictionary:Dictionary<string> = {}
   
   constructor(private readonly _invitationStore: InvitationStore, private readonly _profileStore: ProfileStore) {
-    this.outgoingInvitations$  = this._invitationStore.selectUncompletedInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
-    this.incommingInvitations$  = this._invitationStore.selectUncompletedInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter === this._profileStore.mypubkey)));
+    this.outgoingInvitations$  = this._invitationStore.selectUncompletedInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter.join() === this._profileStore.mypubkey.join())));
+    this.incommingInvitations$  = this._invitationStore.selectUncompletedInvitations().pipe(map(ilist=>ilist.filter(inv=>inv.invitation.inviter.join() !== this._profileStore.mypubkey.join())));
   }
 
 
   ngOnInit(){
-    this.profileDictionarySubscription$ = this._profileStore.selectKeyNickIndexes().subscribe(res=>this.profileDictionary = Object.assign({},...res))
+    let agentList:AgentPubKey[] = []
+    agentList.push(this.outgoingInvitations$.pipe(map(inv=>inv.map(inv=>inv.invitees_who_accepted))))
+    this.profileDictionarySubscription$ = this._profileStore.selectAgentKeyNicksDictionary().subscribe(res=>this.profileDictionary = Object.assign({},...res))
          // .subscribe(res => {this.agentDictionary = Object.assign({}, ...res.map((x) => ({[x.agent_pub_key]: x.nickname})))});
   }
 
